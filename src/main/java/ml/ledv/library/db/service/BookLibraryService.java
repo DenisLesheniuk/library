@@ -13,15 +13,15 @@ public interface BookLibraryService {
 
     void reserveBook(String bookId, String userId);
 
-    List<Book> getBooks();
+    List<?> getBooks();
 
-    List<Book> getFreeBook();
+    List<?> getFreeBook();
 
     void createUser(String login);
 
     void deleteUser(String id);
 
-    List<User> getUsers();
+    List<?> getUsers();
 
-    void returnBook(String id);
+    void cancelReservation(String id);
 }

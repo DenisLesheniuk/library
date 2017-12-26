@@ -4,6 +4,7 @@ import ml.ledv.library.cli.CLI;
 import ml.ledv.library.db.service.BookLibraryService;
 import ml.ledv.library.db.nosql.entity.Book;
 import ml.ledv.library.db.nosql.entity.User;
+import ml.ledv.library.db.sql.entity.impl.BookEntity;
 
 import java.util.Scanner;
 
@@ -111,19 +112,19 @@ public class CLIImpl implements CLI {
             bookId = scanner.nextLine();
         }
 
-        bookLibraryService.returnBook(bookId);
+        bookLibraryService.cancelReservation(bookId);
 
         System.out.println("Book is returned - " + bookId);
     }
 
     private void showBooks() {
-        for (Book book : bookLibraryService.getBooks()) {
+        for (BookEntity book : ()bookLibraryService.getBooks()) {
             System.out.println(book);
         }
     }
 
     private void showFreeBooks() {
-        for (Book book : bookLibraryService.getFreeBook()) {
+        for (BookEntity book : bookLibraryService.getFreeBook()) {
             System.out.println(book);
         }
     }

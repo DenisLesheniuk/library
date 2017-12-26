@@ -112,7 +112,7 @@ public class BLSMongoDB implements BookLibraryService {
     }
 
     @Override
-    public void returnBook(final String id) {
+    public void cancelReservation(final String id) {
 
         final Optional<Book> bookOptional = bookService.getBookById(id);
 
