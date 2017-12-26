@@ -38,7 +38,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "2": {
-
+                    deleteBook();
                     break;
                 }
                 case "3": {
@@ -84,6 +84,22 @@ public class CLIImpl implements CLI {
         System.out.println("Created book - " + bookName);
     }
 
+    private void deleteBook() {
+
+        String bookId = null;
+
+        while (bookId == null) {
+            System.out.println("Enter book name: ");
+
+            final Scanner scanner = new Scanner(System.in);
+            bookId = scanner.nextLine();
+        }
+
+        bookLibraryService.deleteBook(bookId);
+
+        System.out.println("Deleted book - " + bookId);
+    }
+
     private void returnBook() {
 
         String bookId = null;
@@ -114,25 +130,25 @@ public class CLIImpl implements CLI {
 
     private void reserveBook() {
 
-        String bookName = null;
-        String userLogin = null;
+        String bookId = null;
+        String userId = null;
 
-        while (bookName == null) {
+        while (bookId == null) {
             System.out.println("Enter book id: ");
 
             final Scanner scanner = new Scanner(System.in);
-            bookName = scanner.nextLine();
+            bookId = scanner.nextLine();
         }
-        while (userLogin == null) {
+        while (userId == null) {
             System.out.println("Enter user id: ");
 
             final Scanner scanner = new Scanner(System.in);
-            userLogin = scanner.nextLine();
+            userId = scanner.nextLine();
         }
 
-        bookLibraryService.reserveBook(bookName, userLogin);
+        bookLibraryService.reserveBook(bookId, userId);
 
-        System.out.println("Book " + bookName + " is reserved " + " by " + userLogin);
+        System.out.println("Book " + bookId + " is reserved " + " by " + userId);
     }
 
     private void userServiceMenu() {
@@ -204,7 +220,7 @@ public class CLIImpl implements CLI {
 
     private void showUsers() {
         for (User user : bookLibraryService.getUsers()) {
-            System.out.print(user);
+            System.out.println(user);
         }
     }
 

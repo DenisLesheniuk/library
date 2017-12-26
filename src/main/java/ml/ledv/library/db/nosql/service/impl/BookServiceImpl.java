@@ -37,10 +37,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(final Book book) {
 
-        final User user = book.getUser();
-        user.getBooks().remove(book);
+        if (book.getUser() != null) {
+            final User user = book.getUser();
+            user.getBooks().remove(book);
+            userRepository.save(user);
+        }
 
-        userRepository.save(user);
+
         bookRepository.delete(book);
     }
 

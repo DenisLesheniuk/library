@@ -16,7 +16,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String id, String name, User user) {
+    public Book(final String id, final String name, final User user) {
         this.id = id;
         this.name = name;
         this.user = user;
@@ -26,7 +26,7 @@ public class Book {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -34,7 +34,7 @@ public class Book {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -42,7 +42,7 @@ public class Book {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
