@@ -1,7 +1,7 @@
 package ml.ledv.library.db.nosql.service;
 
 
-import ml.ledv.library.db.nosql.entity.impl.User;
+import ml.ledv.library.db.nosql.entity.User;
 
 import java.util.List;
 import java.util.Optional;

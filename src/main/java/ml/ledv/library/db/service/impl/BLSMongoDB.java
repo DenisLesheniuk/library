@@ -1,8 +1,10 @@
-package ml.ledv.library.db.nosql.service;
+package ml.ledv.library.db.service.impl;
 
-import ml.ledv.library.db.BookLibraryService;
-import ml.ledv.library.db.nosql.entity.impl.Book;
-import ml.ledv.library.db.nosql.entity.impl.User;
+import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.db.nosql.entity.Book;
+import ml.ledv.library.db.nosql.entity.User;
+import ml.ledv.library.db.nosql.service.BookService;
+import ml.ledv.library.db.nosql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.Optional;
 public class BLSMongoDB implements BookLibraryService {
 
     private UserService userService;
+
     private BookService bookService;
 
     @Autowired

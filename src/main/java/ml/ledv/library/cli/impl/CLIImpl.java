@@ -1,9 +1,9 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
-import ml.ledv.library.db.BookLibraryService;
-import ml.ledv.library.db.nosql.entity.impl.Book;
-import ml.ledv.library.db.nosql.entity.impl.User;
+import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.db.nosql.entity.Book;
+import ml.ledv.library.db.nosql.entity.User;
 
 import java.util.Scanner;
 

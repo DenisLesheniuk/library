@@ -1,15 +1,13 @@
 package ml.ledv.library.db.nosql.service.impl;
 
-import ml.ledv.library.db.nosql.entity.impl.Book;
-import ml.ledv.library.db.nosql.entity.impl.User;
+import ml.ledv.library.db.nosql.entity.Book;
+import ml.ledv.library.db.nosql.entity.User;
 import ml.ledv.library.db.nosql.repository.BookRepository;
 import ml.ledv.library.db.nosql.repository.UserRepository;
 import ml.ledv.library.db.nosql.service.BookService;
-import ml.ledv.library.db.nosql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package ml.ledv.library.db.nosql.entity.impl;
+package ml.ledv.library.db.nosql.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

@@ -1,7 +1,7 @@
 package ml.ledv.library;
 
 import ml.ledv.library.cli.impl.CLIImpl;
-import ml.ledv.library.db.BookLibraryService;
+import ml.ledv.library.db.service.BookLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

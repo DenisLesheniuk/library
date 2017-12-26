@@ -1,8 +1,8 @@
-package ml.ledv.library.db.sql.service;
+package ml.ledv.library.db.service.impl;
 
-import ml.ledv.library.db.BookLibraryService;
-import ml.ledv.library.db.nosql.entity.impl.Book;
-import ml.ledv.library.db.nosql.entity.impl.User;
+import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.db.nosql.entity.Book;
+import ml.ledv.library.db.nosql.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,17 +11,17 @@ import java.util.List;
 public class BLSMySQL implements BookLibraryService {
 
     @Override
-    public void createBook(String name) {
+    public void createBook(final String name) {
 
     }
 
     @Override
-    public void deleteBook(String id) {
+    public void deleteBook(final String id) {
 
     }
 
     @Override
-    public void reserveBook(String bookId, String userId) {
+    public void reserveBook(final String bookId, final String userId) {
 
     }
 
@@ -36,12 +36,12 @@ public class BLSMySQL implements BookLibraryService {
     }
 
     @Override
-    public void createUser(String login) {
+    public void createUser(final String login) {
 
     }
 
     @Override
-    public void deleteUser(String id) {
+    public void deleteUser(final String id) {
 
     }
 
@@ -51,7 +51,7 @@ public class BLSMySQL implements BookLibraryService {
     }
 
     @Override
-    public void returnBook(String id) {
+    public void returnBook(final String id) {
 
     }
 }
