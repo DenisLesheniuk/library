@@ -6,11 +6,9 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
-
-     maven {
+    maven {
         url 'https://repo.spring.io/libs-milestone'
     }
-
 }
 
 dependencies {
@@ -18,8 +16,7 @@ dependencies {
 
     compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
+    compile ("org.springframework.boot:spring-boot-starter-web:2.0.0.M7")
 
     runtime('mysql:mysql-connector-java:5.1.6')
-
-
 }
