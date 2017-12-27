@@ -1,8 +1,8 @@
-package ml.ledv.library.db.service.impl;
+package ml.ledv.library.cli.service.impl;
 
 import ml.ledv.library.db.nosql.document.BookDocument;
 import ml.ledv.library.db.nosql.document.UserDocument;
-import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.cli.service.BookLibraryService;
 import ml.ledv.library.db.nosql.service.BookService;
 import ml.ledv.library.db.nosql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

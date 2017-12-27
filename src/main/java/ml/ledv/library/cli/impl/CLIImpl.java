@@ -1,7 +1,7 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
-import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.cli.service.BookLibraryService;
 
 import java.util.Scanner;
 

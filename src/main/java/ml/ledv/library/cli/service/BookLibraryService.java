@@ -1,6 +1,4 @@
-package ml.ledv.library.db.service;
-
-import java.util.List;
+package ml.ledv.library.cli.service;
 
 public interface BookLibraryService {
 
