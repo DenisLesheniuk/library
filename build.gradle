@@ -18,5 +18,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
     compile ("org.springframework.boot:spring-boot-starter-web:2.0.0.M7")
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.9.3'
+
+
     runtime('mysql:mysql-connector-java:5.1.6')
 }

@@ -3,6 +3,7 @@ package ml.ledv.library.db.sql.entity.impl;
 import ml.ledv.library.db.sql.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "book")
 public class BookEntity extends BaseEntity {
