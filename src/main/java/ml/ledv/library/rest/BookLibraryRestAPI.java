@@ -29,16 +29,6 @@ public class BookLibraryRestAPI {
         this.bookService = bookService;
     }
 
-    @GetMapping()
-    public ResponseEntity<?> hello() {
-        BookEntity bookEntity = new BookEntity();
-        bookEntity.setId("asdasdsddw2323fd234t34ge354ug123");
-        bookEntity.setName("Book");
-        bookEntity.setUserEntity(new UserEntity("adfas", "Denis", null));
-
-        return ResponseEntity.ok(bookEntity);
-    }
-
     @PostMapping("/users")
     public ResponseEntity<?> createUser(@RequestBody final UserParams userParams) {
 
