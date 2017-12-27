@@ -1,6 +1,6 @@
-package ml.ledv.library.db.service.impl;
+package ml.ledv.library.cli.service.impl;
 
-import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.cli.service.BookLibraryService;
 
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
