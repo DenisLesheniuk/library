@@ -25,7 +25,7 @@ public class CLIImpl implements CLI {
             System.out.println("4. Show all.");
             System.out.println("5. Show all free.");
             System.out.println("6. Reserve book.");
-            System.out.println("7. User service.");
+            System.out.println("7. UserDocument service.");
 
             final Scanner scanner = new Scanner(System.in);
             final String choice = scanner.nextLine();
@@ -111,7 +111,7 @@ public class CLIImpl implements CLI {
 
         bookLibraryService.cancelReservation(bookId);
 
-        System.out.println("Book is returned - " + bookId);
+        System.out.println("BookDocument is returned - " + bookId);
     }
 
     private void showAll() {
@@ -142,16 +142,16 @@ public class CLIImpl implements CLI {
 
         bookLibraryService.reserveBook(bookId, userId);
 
-        System.out.println("Book " + bookId + " is reserved " + " by " + userId);
+        System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId);
     }
 
     private void userServiceMenu() {
         while (true) {
 
-            System.out.println("User service menu.");
+            System.out.println("UserDocument service menu.");
 
-            System.out.println("1. Create User");
-            System.out.println("2. Delete User");
+            System.out.println("1. Create UserDocument");
+            System.out.println("2. Delete UserDocument");
             System.out.println("3. Show all.");
             System.out.println("4. Back.");
 
@@ -215,5 +215,4 @@ public class CLIImpl implements CLI {
     private void showUsers() {
         bookLibraryService.showUsers();
     }
-
 }

@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 
-public class User {
+public class UserDocument {
 
     @Id
     private String id;
@@ -15,14 +15,14 @@ public class User {
     private String login;
 
     @DBRef(lazy = true)
-    private List<Book> books;
+    private List<BookDocument> bookDocuments;
 
-    public User() {
+    public UserDocument() {
     }
 
-    public User(final String login, final List<Book> books) {
+    public UserDocument(final String login, final List<BookDocument> bookDocuments) {
         this.login = login;
-        this.books = books;
+        this.bookDocuments = bookDocuments;
     }
 
     public String getId() {
@@ -41,20 +41,20 @@ public class User {
         this.login = login;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public List<BookDocument> getBookDocuments() {
+        return bookDocuments;
     }
 
-    public void setBooks(final List<Book> books) {
-        this.books = books;
+    public void setBookDocuments(final List<BookDocument> bookDocuments) {
+        this.bookDocuments = bookDocuments;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDocument{" +
                 "id='" + id + '\'' +
                 ", login='" + login + '\'' +
-                ", books=" + books +
+                ", bookDocuments=" + bookDocuments +
                 '}';
     }
 }

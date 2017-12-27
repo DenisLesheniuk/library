@@ -3,7 +3,7 @@ package ml.ledv.library.db.nosql.entity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-public class Book {
+public class BookDocument {
 
     @Id
     private String id;
@@ -11,15 +11,15 @@ public class Book {
     private String name;
 
     @DBRef(lazy = true)
-    private User user;
+    private UserDocument userDocument;
 
-    public Book() {
+    public BookDocument() {
     }
 
-    public Book(final String id, final String name, final User user) {
+    public BookDocument(final String id, final String name, final UserDocument userDocument) {
         this.id = id;
         this.name = name;
-        this.user = user;
+        this.userDocument = userDocument;
     }
 
     public String getId() {
@@ -38,20 +38,20 @@ public class Book {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public UserDocument getUserDocument() {
+        return userDocument;
     }
 
-    public void setUser(final User user) {
-        this.user = user;
+    public void setUserDocument(final UserDocument userDocument) {
+        this.userDocument = userDocument;
     }
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "BookDocument{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", user=" + user +
+                ", userDocument=" + userDocument +
                 '}';
     }
 }

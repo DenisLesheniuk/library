@@ -1,7 +1,7 @@
 package ml.ledv.library.db.nosql.service.impl;
 
-import ml.ledv.library.db.nosql.entity.Book;
-import ml.ledv.library.db.nosql.entity.User;
+import ml.ledv.library.db.nosql.entity.BookDocument;
+import ml.ledv.library.db.nosql.entity.UserDocument;
 import ml.ledv.library.db.nosql.repository.BookRepository;
 import ml.ledv.library.db.nosql.repository.UserRepository;
 import ml.ledv.library.db.nosql.service.UserService;
@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
     private BookRepository bookRepository;
 
     @Autowired
@@ -27,37 +28,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(final String login) {
 
-        final User user = new User();
-        final List<Book> books = new ArrayList<>();
+        final UserDocument userDocument = new UserDocument();
+        final List<BookDocument> bookDocuments = new ArrayList<>();
 
-        user.setLogin(login);
-        user.setBooks(books);
+        userDocument.setLogin(login);
+        userDocument.setBookDocuments(bookDocuments);
 
-        userRepository.save(user);
+        userRepository.save(userDocument);
     }
 
     @Override
-    public void deleteUser(final User user) {
+    public void deleteUser(final UserDocument userDocument) {
 
-        for (Book book : user.getBooks()) {
-            book.setUser(null);
-            bookRepository.save(book);
+        for (BookDocument bookDocument : userDocument.getBookDocuments()) {
+            bookDocument.setUserDocument(null);
+            bookRepository.save(bookDocument);
         }
-        userRepository.delete(user);
+        userRepository.delete(userDocument);
     }
 
     @Override
-    public Optional<User> getUserById(final String id) {
+    public Optional<UserDocument> getUserById(final String id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public void updateUser(final User user) {
-        userRepository.save(user);
+    public void updateUser(final UserDocument userDocument) {
+        userRepository.save(userDocument);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<UserDocument> getAll() {
         return userRepository.findAll();
     }
 

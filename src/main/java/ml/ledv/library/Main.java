@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Main implements CommandLineRunner {
-
-
+    
     @Autowired
     private Initializer initializer;
 

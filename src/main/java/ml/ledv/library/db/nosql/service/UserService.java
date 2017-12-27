@@ -1,7 +1,7 @@
 package ml.ledv.library.db.nosql.service;
 
 
-import ml.ledv.library.db.nosql.entity.User;
+import ml.ledv.library.db.nosql.entity.UserDocument;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,12 +10,11 @@ public interface UserService {
 
     void createUser(String login);
 
-    void deleteUser(User user);
+    void deleteUser(UserDocument userDocument);
 
-    Optional<User> getUserById(String id);
+    Optional<UserDocument> getUserById(String id);
 
-    void updateUser(User user);
+    void updateUser(UserDocument userDocument);
 
-    List<User> getAll();
-
+    List<UserDocument> getAll();
 }

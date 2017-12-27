@@ -1,6 +1,6 @@
 package ml.ledv.library.db.nosql.service;
 
-import ml.ledv.library.db.nosql.entity.Book;
+import ml.ledv.library.db.nosql.entity.BookDocument;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +9,15 @@ public interface BookService {
 
     void createBook(String name);
 
-    void deleteBook(Book book);
+    void deleteBook(BookDocument bookDocument);
 
-    List<Book> getAll();
+    List<BookDocument> getAll();
 
-    List<Book> getAllFree();
+    List<BookDocument> getAllFree();
 
-    Optional<Book> getBookById(String id);
+    Optional<BookDocument> getBookById(String id);
 
-    void updateBook(Book book);
+    void updateBook(BookDocument bookDocument);
 
-    void removeUser(Book book);
+    void removeUser(BookDocument bookDocument);
 }

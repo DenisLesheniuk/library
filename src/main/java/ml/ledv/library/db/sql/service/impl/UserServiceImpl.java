@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private UserRepositorySQL userRepository;
+
     private BookRepositorySQL bookRepository;
 
     @Autowired

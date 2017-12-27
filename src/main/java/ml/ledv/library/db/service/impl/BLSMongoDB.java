@@ -1,14 +1,13 @@
 package ml.ledv.library.db.service.impl;
 
+import ml.ledv.library.db.nosql.entity.BookDocument;
+import ml.ledv.library.db.nosql.entity.UserDocument;
 import ml.ledv.library.db.service.BookLibraryService;
-import ml.ledv.library.db.nosql.entity.Book;
-import ml.ledv.library.db.nosql.entity.User;
 import ml.ledv.library.db.nosql.service.BookService;
 import ml.ledv.library.db.nosql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service("mongodbService")
@@ -32,7 +31,7 @@ public class BLSMongoDB implements BookLibraryService {
     @Override
     public void deleteBook(final String id) {
 
-        final Optional<Book> bookOptional = bookService.getBookById(id);
+        final Optional<BookDocument> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");
@@ -45,34 +44,34 @@ public class BLSMongoDB implements BookLibraryService {
     @Override
     public void reserveBook(final String bookId, final String userId) {
 
-        final Optional<Book> bookOptional = bookService.getBookById(bookId);
+        final Optional<BookDocument> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + bookId + " is not exist! ");
             return;
         } else {
 
-            final Book book = bookOptional.get();
+            final BookDocument bookDocument = bookOptional.get();
 
-            if (book.getUser() != null) {
-                System.out.println("Book " + book.getName() + " is reserved by " + book.getUser().getId());
+            if (bookDocument.getUserDocument() != null) {
+                System.out.println("Book " + bookDocument.getName() + " is reserved by " + bookDocument.getUserDocument().getId());
                 return;
             } else {
 
-                final Optional<User> userOptional = userService.getUserById(userId);
+                final Optional<UserDocument> userOptional = userService.getUserById(userId);
 
                 if (!userOptional.isPresent()) {
                     System.out.println("User with id " + userId + " is not exist! ");
                     return;
                 } else {
 
-                    final User user = userOptional.get();
+                    final UserDocument userDocument = userOptional.get();
 
-                    book.setUser(user);
-                    user.getBooks().add(book);
+                    bookDocument.setUserDocument(userDocument);
+                    userDocument.getBookDocuments().add(bookDocument);
 
-                    userService.updateUser(user);
-                    bookService.updateBook(book);
+                    userService.updateUser(userDocument);
+                    bookService.updateBook(bookDocument);
                 }
             }
         }
@@ -80,23 +79,23 @@ public class BLSMongoDB implements BookLibraryService {
 
     @Override
     public void showBooks() {
-        for (Book book : bookService.getAll()) {
+        for (BookDocument bookDocument : bookService.getAll()) {
             System.out.println();
             System.out.println("************************");
-            System.out.println("Id:        " + book.getId());
-            System.out.println("Book name: " + book.getName());
-            System.out.println("User:      " + book.getUser());
+            System.out.println("Id:        " + bookDocument.getId());
+            System.out.println("Book name: " + bookDocument.getName());
+            System.out.println("User:      " + bookDocument.getUserDocument());
             System.out.println("************************");
         }
     }
 
     @Override
     public void showFreeBook() {
-        for (Book book : bookService.getAllFree()) {
+        for (BookDocument bookDocument : bookService.getAllFree()) {
             System.out.println();
             System.out.println("************************");
-            System.out.println("Id:        " + book.getId());
-            System.out.println("Book name: " + book.getName());
+            System.out.println("Id:        " + bookDocument.getId());
+            System.out.println("Book name: " + bookDocument.getName());
             System.out.println("************************");
         }
     }
@@ -109,7 +108,7 @@ public class BLSMongoDB implements BookLibraryService {
     @Override
     public void deleteUser(final String id) {
 
-        final Optional<User> userOptional = userService.getUserById(id);
+        final Optional<UserDocument> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             System.out.println("User with id " + id + " is not exist!");
@@ -121,17 +120,17 @@ public class BLSMongoDB implements BookLibraryService {
 
     @Override
     public void showUsers() {
-        for (User user : userService.getAll()) {
+        for (UserDocument userDocument : userService.getAll()) {
             System.out.println();
             System.out.println("************************");
-            System.out.println("Id:           " + user.getId());
-            System.out.println("User's login: " + user.getLogin());
+            System.out.println("Id:           " + userDocument.getId());
+            System.out.println("User's login: " + userDocument.getLogin());
             System.out.println("Books:        ");
-            for (Book book : user.getBooks()) {
+            for (BookDocument bookDocument : userDocument.getBookDocuments()) {
                 System.out.println();
                 System.out.println("------------------------");
-                System.out.println("Id:        " + book.getId());
-                System.out.println("Book name: " + book.getName());
+                System.out.println("Id:        " + bookDocument.getId());
+                System.out.println("Book name: " + bookDocument.getName());
                 System.out.println("------------------------");
             }
             System.out.println("************************");
@@ -141,7 +140,7 @@ public class BLSMongoDB implements BookLibraryService {
     @Override
     public void cancelReservation(final String id) {
 
-        final Optional<Book> bookOptional = bookService.getBookById(id);
+        final Optional<BookDocument> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");

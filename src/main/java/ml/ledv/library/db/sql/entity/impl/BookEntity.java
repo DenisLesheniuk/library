@@ -2,7 +2,6 @@ package ml.ledv.library.db.sql.entity.impl;
 
 import ml.ledv.library.db.sql.entity.BaseEntity;
 
-
 import javax.persistence.*;
 
 @Entity(name = "book")

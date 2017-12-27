@@ -25,7 +25,6 @@ public class BookServiceImpl implements BookService {
         this.userRepository = userRepository;
     }
 
-
     @Override
     public void createBook(final String name) {
         final BookEntity bookEntity = new BookEntity();
