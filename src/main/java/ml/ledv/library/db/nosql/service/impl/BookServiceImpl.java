@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("bookServiceImplNoSQL")
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;

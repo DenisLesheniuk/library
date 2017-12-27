@@ -2,16 +2,15 @@ package ml.ledv.library.db.sql.entity.impl;
 
 import ml.ledv.library.db.sql.entity.BaseEntity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
-@Entity(name = "BOOK")
+import javax.persistence.*;
+
+@Entity(name = "book")
 public class BookEntity extends BaseEntity {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity userEntity;
 
     public BookEntity() {

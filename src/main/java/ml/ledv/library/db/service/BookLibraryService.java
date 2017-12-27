@@ -1,8 +1,5 @@
 package ml.ledv.library.db.service;
 
-import ml.ledv.library.db.nosql.entity.Book;
-import ml.ledv.library.db.nosql.entity.User;
-
 import java.util.List;
 
 public interface BookLibraryService {
@@ -13,15 +10,15 @@ public interface BookLibraryService {
 
     void reserveBook(String bookId, String userId);
 
-    List<?> getBooks();
+    void showBooks();
 
-    List<?> getFreeBook();
+    void showFreeBook();
 
     void createUser(String login);
 
     void deleteUser(String id);
 
-    List<?> getUsers();
+    void showUsers();
 
     void cancelReservation(String id);
 }

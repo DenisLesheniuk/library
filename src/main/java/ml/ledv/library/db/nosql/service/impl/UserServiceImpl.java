@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("userServiceImplNoSQL")
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;

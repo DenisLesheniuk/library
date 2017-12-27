@@ -19,7 +19,7 @@ public class BLSMongoDB implements BookLibraryService {
     private BookService bookService;
 
     @Autowired
-    public BLSMongoDB(final UserService userService,final  BookService bookService) {
+    public BLSMongoDB(final UserService userService, final BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
@@ -79,13 +79,26 @@ public class BLSMongoDB implements BookLibraryService {
     }
 
     @Override
-    public List<Book> getBooks() {
-        return bookService.getAll();
+    public void showBooks() {
+        for (Book book : bookService.getAll()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            System.out.println("User:      " + book.getUser());
+            System.out.println("************************");
+        }
     }
 
     @Override
-    public List<Book> getFreeBook() {
-        return bookService.getAllFree();
+    public void showFreeBook() {
+        for (Book book : bookService.getAllFree()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            System.out.println("************************");
+        }
     }
 
     @Override
@@ -107,8 +120,22 @@ public class BLSMongoDB implements BookLibraryService {
     }
 
     @Override
-    public List<User> getUsers() {
-        return userService.getAll();
+    public void showUsers() {
+        for (User user : userService.getAll()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:           " + user.getId());
+            System.out.println("User's login: " + user.getLogin());
+            System.out.println("Books:        ");
+            for (Book book : user.getBooks()) {
+                System.out.println();
+                System.out.println("------------------------");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("------------------------");
+            }
+            System.out.println("************************");
+        }
     }
 
     @Override

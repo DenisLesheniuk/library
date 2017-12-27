@@ -2,18 +2,17 @@ package ml.ledv.library.db.sql.entity.impl;
 
 import ml.ledv.library.db.sql.entity.BaseEntity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.util.List;
 
-@Entity(name = "USER")
+@Entity(name = "user")
 public class UserEntity extends BaseEntity {
 
     private String login;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     private List<BookEntity> books;
 
     public UserEntity() {

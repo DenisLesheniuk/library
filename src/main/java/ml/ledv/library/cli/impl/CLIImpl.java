@@ -2,9 +2,6 @@ package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
 import ml.ledv.library.db.service.BookLibraryService;
-import ml.ledv.library.db.nosql.entity.Book;
-import ml.ledv.library.db.nosql.entity.User;
-import ml.ledv.library.db.sql.entity.impl.BookEntity;
 
 import java.util.Scanner;
 
@@ -47,11 +44,11 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "4": {
-                    showBooks();
+                    showAll();
                     break;
                 }
                 case "5": {
-                    showFreeBooks();
+                    showAllFree();
                     break;
                 }
                 case "6": {
@@ -106,7 +103,7 @@ public class CLIImpl implements CLI {
         String bookId = null;
 
         while (bookId == null) {
-            System.out.println("Enter user id: ");
+            System.out.println("Enter book id: ");
 
             final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
@@ -117,16 +114,12 @@ public class CLIImpl implements CLI {
         System.out.println("Book is returned - " + bookId);
     }
 
-    private void showBooks() {
-        for (BookEntity book : ()bookLibraryService.getBooks()) {
-            System.out.println(book);
-        }
+    private void showAll() {
+      bookLibraryService.showBooks();
     }
 
-    private void showFreeBooks() {
-        for (BookEntity book : bookLibraryService.getFreeBook()) {
-            System.out.println(book);
-        }
+    private void showAllFree() {
+      bookLibraryService.showFreeBook();
     }
 
     private void reserveBook() {
@@ -220,9 +213,7 @@ public class CLIImpl implements CLI {
     }
 
     private void showUsers() {
-        for (User user : bookLibraryService.getUsers()) {
-            System.out.println(user);
-        }
+        bookLibraryService.showUsers();
     }
 
 }

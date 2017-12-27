@@ -2,8 +2,8 @@ package ml.ledv.library.db.sql.service.impl;
 
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
-import ml.ledv.library.db.sql.repository.BookRepository;
-import ml.ledv.library.db.sql.repository.UserRepository;
+import ml.ledv.library.db.sql.repository.BookRepositorySQL;
+import ml.ledv.library.db.sql.repository.UserRepositorySQL;
 import ml.ledv.library.db.sql.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("userServiceImplSQL")
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private BookRepository bookRepository;
+    private UserRepositorySQL userRepository;
+    private BookRepositorySQL bookRepository;
 
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository, final BookRepository bookRepository) {
+    public UserServiceImpl(final UserRepositorySQL userRepository, final BookRepositorySQL bookRepository) {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
     }

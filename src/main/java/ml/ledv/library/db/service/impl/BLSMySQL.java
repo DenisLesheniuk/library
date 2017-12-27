@@ -72,21 +72,38 @@ public class BLSMySQL implements BookLibraryService {
                     book.setUserEntity(user);
                     user.getBooks().add(book);
 
-                    userService.updateUser(user);
                     bookService.updateBook(book);
+                    userService.updateUser(user);
                 }
             }
         }
     }
 
     @Override
-    public List<BookEntity> getBooks() {
-        return bookService.getAll();
+    public void showBooks() {
+        for (BookEntity book : bookService.getAll()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            if (book.getUserEntity() != null) {
+                System.out.println("User:      " + "id    " + book.getUserEntity().getId());
+                System.out.println("           login " + book.getUserEntity().getLogin());
+            }
+            System.out.println("************************");
+
+        }
     }
 
     @Override
-    public List<BookEntity> getFreeBook() {
-        return bookService.getAllFree();
+    public void showFreeBook() {
+        for (BookEntity book : bookService.getAllFree()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            System.out.println("************************");
+        }
     }
 
     @Override
@@ -107,8 +124,22 @@ public class BLSMySQL implements BookLibraryService {
     }
 
     @Override
-    public List<UserEntity> getUsers() {
-        return userService.getAll();
+    public void showUsers() {
+        for (UserEntity user : userService.getAll()) {
+            System.out.println();
+            System.out.println("************************");
+            System.out.println("Id:           " + user.getId());
+            System.out.println("User's login: " + user.getLogin());
+            System.out.println("Books:        ");
+            for (BookEntity book : user.getBooks()) {
+                System.out.println();
+                System.out.println("------------------------");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("------------------------");
+            }
+            System.out.println("************************");
+        }
     }
 
     @Override
