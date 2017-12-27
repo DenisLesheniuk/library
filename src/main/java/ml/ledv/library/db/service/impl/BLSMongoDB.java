@@ -1,7 +1,7 @@
 package ml.ledv.library.db.service.impl;
 
-import ml.ledv.library.db.nosql.entity.BookDocument;
-import ml.ledv.library.db.nosql.entity.UserDocument;
+import ml.ledv.library.db.nosql.document.BookDocument;
+import ml.ledv.library.db.nosql.document.UserDocument;
 import ml.ledv.library.db.service.BookLibraryService;
 import ml.ledv.library.db.nosql.service.BookService;
 import ml.ledv.library.db.nosql.service.UserService;
