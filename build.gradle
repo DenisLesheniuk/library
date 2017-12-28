@@ -11,6 +11,64 @@ repositories {
     }
 }
 
+// tag::xsd[]
+task genJaxb {
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    ext.classesDir = "${buildDir}/classes/jaxb"
+    ext.schema = "src/main/resources/users.xsd"
+
+    outputs.dir classesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+            mkdir(dir: classesDir)
+
+            xjc(destdir: sourcesDir, schema: schema) {
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+
+            javac(destdir: classesDir, source: 1.6, target: 1.6, debug: true,
+                    debugLevel: "lines,vars,source",
+                    classpath: configurations.jaxb.asPath) {
+                src(path: sourcesDir)
+                include(name: "**/*.java")
+                include(name: "*.java")
+            }
+
+            copy(todir: classesDir) {
+                fileset(dir: sourcesDir, erroronmissingdir: false) {
+                    exclude(name: "**/*.java")
+                }
+            }
+        }
+    }
+}
+// end::xsd[]
+
+task afterEclipseImport {
+    dependsOn "genJaxb"
+}
+
+// tag::jaxb[]
+configurations {
+    jaxb
+}
+
+jar {
+    baseName = 'gs-producing-web-service'
+    version = '0.1.0'
+    from genJaxb.classesDir
+}
+
+// tag::dependencies[]
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
@@ -19,4 +77,10 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:2.0.0.M7")
 
     runtime('mysql:mysql-connector-java:5.1.6')
+
+    compile("org.springframework.boot:spring-boot-starter-web-services:1.4.7.RELEASE")
+
+    compile("wsdl4j:wsdl4j:1.6.1")
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+    compile(files(genJaxb.classesDir).builtBy(genJaxb))
 }
