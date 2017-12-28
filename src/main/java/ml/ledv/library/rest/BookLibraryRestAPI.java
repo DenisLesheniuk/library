@@ -1,5 +1,7 @@
 package ml.ledv.library.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.net.httpserver.Headers;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
@@ -8,11 +10,15 @@ import ml.ledv.library.rest.params.BookParams;
 import ml.ledv.library.rest.params.UserParams;
 import ml.ledv.library.rest.responce.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -44,7 +50,7 @@ public class BookLibraryRestAPI {
 
     @GetMapping("/users")
     public ResponseEntity<?> getUsers() {
-        return ResponseEntity.ok(userService.getAll());
+        return ResponseEntity.ok().body(userService.getAll());
     }
 
     @DeleteMapping("/users/{id}")
@@ -57,6 +63,42 @@ public class BookLibraryRestAPI {
         } else {
             userService.deleteUser(userOptional.get());
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookParams bookParams) {
+
+        final Optional<UserEntity> userOptional = userService.getUserById(id);
+
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Not found user with id. " + id));
+        } else {
+
+            final String bookId = bookParams.getId();
+
+            if (bookId == null) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Empty id field. "));
+            } else {
+
+                Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+
+                if (!bookOptional.isPresent()) {
+                    return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + bookId));
+                } else {
+
+                    final UserEntity userEntity = userOptional.get();
+                    final BookEntity bookEntity = bookOptional.get();
+
+                    userEntity.getBooks().add(bookEntity);
+                    bookEntity.setUserEntity(userEntity);
+
+                    bookService.updateBook(bookEntity);
+                    userService.updateUser(userEntity);
+
+                    return ResponseEntity.ok().build();
+                }
+            }
         }
     }
 
@@ -78,7 +120,6 @@ public class BookLibraryRestAPI {
         return ResponseEntity.ok(bookService.getAll());
     }
 
-
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable final String id) {
 
@@ -93,32 +134,25 @@ public class BookLibraryRestAPI {
     }
 
     @PutMapping("/books/{id}")
-    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final UserParams userParams) {
+    public ResponseEntity<?> cancelBookReservation(@PathVariable final String id) {
 
         final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+
         if (!bookOptional.isPresent()) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id " + id));
+            return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + id));
         } else {
-            final String userId = userParams.getId();
-            if (userId == null) {
-                return ResponseEntity.badRequest().body(new ErrorResponse("Empty field id"));
-            } else {
-                final Optional<UserEntity> userOptional = userService.getUserById(userId);
-                if (!userOptional.isPresent()) {
-                    return ResponseEntity.badRequest().body(new ErrorResponse("Not found user with id " + userId));
-                }else {
-                    final UserEntity userEntity = userOptional.get();
-                    final BookEntity bookEntity = bookOptional.get();
 
-                    userEntity.getBooks().add(bookEntity);
-                    bookEntity.setUserEntity(userEntity);
+            final BookEntity bookEntity = bookOptional.get();
+            final UserEntity userEntity = bookEntity.getUserEntity();
 
-                    bookService.updateBook(bookEntity);
-                    userService.updateUser(userEntity);
+            bookEntity.setUserEntity(null);
 
-                    return ResponseEntity.ok().build();
-                }
-            }
+            userEntity.getBooks().remove(bookEntity);
+
+            bookService.updateBook(bookEntity);
+            userService.updateUser(userEntity);
+
+            return ResponseEntity.ok().build();
         }
     }
 }

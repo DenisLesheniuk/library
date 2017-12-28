@@ -1,8 +1,11 @@
 package ml.ledv.library.db.sql.entity.impl;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import ml.ledv.library.db.sql.entity.BaseEntity;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity(name = "book")
@@ -11,6 +14,8 @@ public class BookEntity extends BaseEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
 
     public BookEntity() {

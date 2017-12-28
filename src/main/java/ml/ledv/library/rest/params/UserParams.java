@@ -5,6 +5,9 @@ public class UserParams {
     private String id;
     private String login;
 
+    public UserParams() {
+    }
+
     public UserParams(final String id, final String login) {
         this.id = id;
         this.login = login;
