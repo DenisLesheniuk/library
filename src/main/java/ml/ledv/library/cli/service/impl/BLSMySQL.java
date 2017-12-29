@@ -35,7 +35,7 @@ public class BLSMySQL implements BookLibraryService {
         final Optional<BookEntity> optionalBookEntity = bookService.getBookById(id);
 
         if (!optionalBookEntity.isPresent()) {
-            System.out.println("BookDocument with id " + id + " is not exist!");
+            System.out.println("Book with id " + id + " is not exist!");
             return;
         } else {
             bookService.deleteBook(optionalBookEntity.get());
@@ -48,21 +48,21 @@ public class BLSMySQL implements BookLibraryService {
         final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
-            System.out.println("BookDocument with id " + bookId + " is not exist! ");
+            System.out.println("Book with id " + bookId + " is not exist! ");
             return;
         } else {
 
             final BookEntity book = bookOptional.get();
 
             if (book.getUserEntity() != null) {
-                System.out.println("BookDocument " + book.getName() + " is reserved by " + book.getUserEntity().getId());
+                System.out.println("Book " + book.getName() + " is reserved by " + book.getUserEntity().getId());
                 return;
             } else {
 
                 final Optional<UserEntity> userOptional = userService.getUserById(userId);
 
                 if (!userOptional.isPresent()) {
-                    System.out.println("UserDocument with id " + userId + " is not exist! ");
+                    System.out.println("User with id " + userId + " is not exist! ");
                     return;
                 } else {
 
@@ -84,9 +84,9 @@ public class BLSMySQL implements BookLibraryService {
             System.out.println();
             System.out.println("************************");
             System.out.println("Id:        " + book.getId());
-            System.out.println("BookDocument name: " + book.getName());
+            System.out.println("Book name: " + book.getName());
             if (book.getUserEntity() != null) {
-                System.out.println("UserDocument:      " + "id    " + book.getUserEntity().getId());
+                System.out.println("User:      " + "id    " + book.getUserEntity().getId());
                 System.out.println("           login " + book.getUserEntity().getLogin());
             }
             System.out.println("************************");
@@ -99,7 +99,7 @@ public class BLSMySQL implements BookLibraryService {
             System.out.println();
             System.out.println("************************");
             System.out.println("Id:        " + book.getId());
-            System.out.println("BookDocument name: " + book.getName());
+            System.out.println("Book name: " + book.getName());
             System.out.println("************************");
         }
     }
@@ -114,7 +114,7 @@ public class BLSMySQL implements BookLibraryService {
         final Optional<UserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
-            System.out.println("UserDocument with id " + id + " is not exist!");
+            System.out.println("User with id " + id + " is not exist!");
             return;
         } else {
             userService.deleteUser(userOptional.get());
@@ -127,13 +127,13 @@ public class BLSMySQL implements BookLibraryService {
             System.out.println();
             System.out.println("************************");
             System.out.println("Id:           " + user.getId());
-            System.out.println("UserDocument's login: " + user.getLogin());
+            System.out.println("User's login: " + user.getLogin());
             System.out.println("Books:        ");
             for (BookEntity book : user.getBooks()) {
                 System.out.println();
                 System.out.println("------------------------");
                 System.out.println("Id:        " + book.getId());
-                System.out.println("BookDocument name: " + book.getName());
+                System.out.println("Book name: " + book.getName());
                 System.out.println("------------------------");
             }
             System.out.println("************************");
@@ -146,7 +146,7 @@ public class BLSMySQL implements BookLibraryService {
         final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
-            System.out.println("BookDocument with id " + id + " is not exist!");
+            System.out.println("Book with id " + id + " is not exist!");
             return;
         } else {
             bookService.removeUser(bookOptional.get());

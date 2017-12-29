@@ -11,21 +11,22 @@ package io.spring.guides.gs_producing_web_service;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for serviceStatus complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="serviceStatus"&gt;
+ * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="statusCode" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="userId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="bookId" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,63 +36,64 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "serviceStatus", propOrder = {
-    "statusCode",
-    "message"
+@XmlType(name = "", propOrder = {
+    "userId",
+    "bookId"
 })
-public class ServiceStatus {
+@XmlRootElement(name = "reserveBookRequest")
+public class ReserveBookRequest {
 
     @XmlElement(required = true)
-    protected String statusCode;
+    protected String userId;
     @XmlElement(required = true)
-    protected String message;
+    protected String bookId;
 
     /**
-     * Gets the value of the statusCode property.
+     * Gets the value of the userId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getStatusCode() {
-        return statusCode;
+    public String getUserId() {
+        return userId;
     }
 
     /**
-     * Sets the value of the statusCode property.
+     * Sets the value of the userId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setStatusCode(String value) {
-        this.statusCode = value;
+    public void setUserId(String value) {
+        this.userId = value;
     }
 
     /**
-     * Gets the value of the message property.
+     * Gets the value of the bookId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMessage() {
-        return message;
+    public String getBookId() {
+        return bookId;
     }
 
     /**
-     * Sets the value of the message property.
+     * Sets the value of the bookId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMessage(String value) {
-        this.message = value;
+    public void setBookId(String value) {
+        this.bookId = value;
     }
 
 }

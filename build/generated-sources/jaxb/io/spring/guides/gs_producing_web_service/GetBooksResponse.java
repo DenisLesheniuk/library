@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="UserEntities" type="{http://spring.io/guides/gs-producing-web-service}userInfo" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="books" type="{http://spring.io/guides/gs-producing-web-service}bookInfo" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,41 +38,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userEntities"
+    "books"
 })
-@XmlRootElement(name = "getUsersResponse")
-public class GetUsersResponse {
+@XmlRootElement(name = "getBooksResponse")
+public class GetBooksResponse {
 
-    @XmlElement(name = "UserEntities", required = true)
-    protected List<UserInfo> userEntities;
+    @XmlElement(required = true)
+    protected List<BookInfo> books;
 
     /**
-     * Gets the value of the userEntities property.
+     * Gets the value of the books property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userEntities property.
+     * This is why there is not a <CODE>set</CODE> method for the books property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getUserEntities().add(newItem);
+     *    getBooks().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link UserInfo }
+     * {@link BookInfo }
      * 
      * 
      */
-    public List<UserInfo> getUserEntities() {
-        if (userEntities == null) {
-            userEntities = new ArrayList<UserInfo>();
+    public List<BookInfo> getBooks() {
+        if (books == null) {
+            books = new ArrayList<BookInfo>();
         }
-        return this.userEntities;
+        return this.books;
     }
 
 }

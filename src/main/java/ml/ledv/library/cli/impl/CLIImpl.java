@@ -25,7 +25,7 @@ public class CLIImpl implements CLI {
             System.out.println("4. Show all.");
             System.out.println("5. Show all free.");
             System.out.println("6. Reserve book.");
-            System.out.println("7. UserDocument service.");
+            System.out.println("7. User service.");
 
             final Scanner scanner = new Scanner(System.in);
             final String choice = scanner.nextLine();

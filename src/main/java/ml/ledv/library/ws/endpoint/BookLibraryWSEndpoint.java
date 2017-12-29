@@ -121,4 +121,33 @@ public class BookLibraryWSEndpoint {
             return response;
         }
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createBookRequest")
+    @ResponsePayload
+    public CreateBookResponse createBook(@RequestPayload final CreateBookRequest request) {
+
+        final CreateBookResponse response = new CreateBookResponse();
+        final ServiceStatus status = new ServiceStatus();
+
+        final String name = request.getName();
+
+        if (name.length() == 0) {
+            status.setStatusCode("BAD_REQUEST");
+            status.setMessage("Empty tag 'name'. ");
+
+            response.setServiceStatus(status);
+
+            return response;
+        } else {
+
+            bookService.createBook(name);
+
+            status.setStatusCode("SUCCESS");
+            status.setMessage("Book added Successfully");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }
+    }
 }
