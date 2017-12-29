@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "books"
 })
-@XmlRootElement(name = "getBooksResponse")
-public class GetBooksResponse {
+@XmlRootElement(name = "getFreeBooksResponse")
+public class GetFreeBooksResponse {
 
     @XmlElement(required = true)
     protected List<BookInfo> books;

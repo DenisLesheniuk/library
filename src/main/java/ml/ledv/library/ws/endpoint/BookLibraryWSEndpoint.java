@@ -322,4 +322,37 @@ public class BookLibraryWSEndpoint {
             }
         }
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getFreeBooksRequest")
+    @ResponsePayload
+    public GetFreeBooksResponse getFreeBooks(@RequestPayload GetFreeBooksRequest request){
+
+        final GetFreeBooksResponse response = new GetFreeBooksResponse();
+
+        final List<BookEntity> bookEntities = bookService.getAllFree();
+        final List<BookInfo> booksInfo = new ArrayList<>();
+
+        for (BookEntity bookEntity : bookEntities) {
+
+            final BookInfo bookInfo = new BookInfo();
+
+            if (bookEntity.getUserEntity() != null) {
+
+                final UserInfo userInfo = new UserInfo();
+
+                BeanUtils.copyProperties(bookEntity.getUserEntity(), userInfo);
+                bookInfo.setUserEntity(userInfo);
+            }
+
+            bookInfo.setId(bookEntity.getId());
+            bookInfo.setName(bookEntity.getName());
+
+            booksInfo.add(bookInfo);
+
+        }
+
+        response.getBooks().addAll(booksInfo);
+
+        return response;
+    }
 }
