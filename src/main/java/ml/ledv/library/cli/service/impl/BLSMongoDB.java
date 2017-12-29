@@ -81,11 +81,11 @@ public class BLSMongoDB implements BookLibraryService {
     public void showBooks() {
         for (BookDocument bookDocument : bookService.getAll()) {
             System.out.println();
-            System.out.println("************************");
+            System.out.println("******************************************************");
             System.out.println("Id:        " + bookDocument.getId());
             System.out.println("Book name: " + bookDocument.getName());
             System.out.println("User:      " + bookDocument.getUserDocument());
-            System.out.println("************************");
+            System.out.println("******************************************************");
         }
     }
 
@@ -93,10 +93,10 @@ public class BLSMongoDB implements BookLibraryService {
     public void showFreeBook() {
         for (BookDocument bookDocument : bookService.getAllFree()) {
             System.out.println();
-            System.out.println("************************");
+            System.out.println("******************************************************");
             System.out.println("Id:        " + bookDocument.getId());
             System.out.println("Book name: " + bookDocument.getName());
-            System.out.println("************************");
+            System.out.println("******************************************************");
         }
     }
 
@@ -122,18 +122,18 @@ public class BLSMongoDB implements BookLibraryService {
     public void showUsers() {
         for (UserDocument userDocument : userService.getAll()) {
             System.out.println();
-            System.out.println("************************");
+            System.out.println("******************************************************");
             System.out.println("Id:           " + userDocument.getId());
             System.out.println("User's login: " + userDocument.getLogin());
             System.out.println("Books:        ");
             for (BookDocument bookDocument : userDocument.getBookDocuments()) {
                 System.out.println();
-                System.out.println("------------------------");
+                System.out.println("-----------------------*********-----------------------");
                 System.out.println("Id:        " + bookDocument.getId());
                 System.out.println("Book name: " + bookDocument.getName());
-                System.out.println("------------------------");
+                System.out.println("-------------------------------------------------------");
             }
-            System.out.println("************************");
+            System.out.println("******************************************************");
         }
     }
 

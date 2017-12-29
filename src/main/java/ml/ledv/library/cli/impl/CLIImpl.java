@@ -150,8 +150,8 @@ public class CLIImpl implements CLI {
 
             System.out.println("UserDocument service menu.");
 
-            System.out.println("1. Create UserDocument");
-            System.out.println("2. Delete UserDocument");
+            System.out.println("1. Create User");
+            System.out.println("2. Delete User");
             System.out.println("3. Show all.");
             System.out.println("4. Back.");
 
