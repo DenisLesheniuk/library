@@ -4,7 +4,7 @@ import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
 import ml.ledv.library.db.sql.service.UserService;
-import ml.ledv.library.rest.params.BookParams;
+import ml.ledv.library.rest.params.BookInfo;
 import ml.ledv.library.rest.params.UserParams;
 import ml.ledv.library.rest.responce.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class BookLibraryRestAPI {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookParams bookParams) {
+    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookInfo bookParams) {
 
         final Optional<UserEntity> userOptional = userService.getUserById(id);
 
@@ -97,7 +97,7 @@ public class BookLibraryRestAPI {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<?> createBook(@RequestBody final BookParams bookParams) {
+    public ResponseEntity<?> createBook(@RequestBody final BookInfo bookParams) {
 
         final String name = bookParams.getName();
 

@@ -24,19 +24,19 @@ public class WSConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean(servlet, "/ws/*");
     }
 
-    @Bean(name = "articles")
+    @Bean(name = "users")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema usersSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("ArticlesPort");
-        wsdl11Definition.setLocationUri("/soapws");
-        wsdl11Definition.setTargetNamespace("http://www.concretepage.com/article-ws");
+        wsdl11Definition.setPortTypeName("UsersPort");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace("http://spring.io/guides/gs-producing-web-service");
         wsdl11Definition.setSchema(usersSchema);
         return wsdl11Definition;
     }
 
     @Bean
-	public XsdSchema usersSchema() {
-		return new SimpleXsdSchema(new ClassPathResource("users.xsd"));
-	}
+    public XsdSchema usersSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("users.xsd"));
+    }
 
 }
