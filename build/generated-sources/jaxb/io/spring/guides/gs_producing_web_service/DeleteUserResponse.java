@@ -8,8 +8,6 @@
 
 package io.spring.guides.gs_producing_web_service;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="UserEntities" type="{http://spring.io/guides/gs-producing-web-service}userInfo" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="serviceStatus" type="{http://spring.io/guides/gs-producing-web-service}serviceStatus"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -38,41 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "userEntities"
+    "serviceStatus"
 })
-@XmlRootElement(name = "getUsersResponse")
-public class GetUsersResponse {
+@XmlRootElement(name = "deleteUserResponse")
+public class DeleteUserResponse {
 
-    @XmlElement(name = "UserEntities", required = true)
-    protected List<UserInfo> userEntities;
+    @XmlElement(required = true)
+    protected ServiceStatus serviceStatus;
 
     /**
-     * Gets the value of the userEntities property.
+     * Gets the value of the serviceStatus property.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userEntities property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getUserEntities().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link UserInfo }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link ServiceStatus }
+     *     
      */
-    public List<UserInfo> getUserEntities() {
-        if (userEntities == null) {
-            userEntities = new ArrayList<UserInfo>();
-        }
-        return this.userEntities;
+    public ServiceStatus getServiceStatus() {
+        return serviceStatus;
+    }
+
+    /**
+     * Sets the value of the serviceStatus property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ServiceStatus }
+     *     
+     */
+    public void setServiceStatus(ServiceStatus value) {
+        this.serviceStatus = value;
     }
 
 }

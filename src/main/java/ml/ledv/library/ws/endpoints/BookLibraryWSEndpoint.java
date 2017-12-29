@@ -15,6 +15,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Endpoint
 public class BookLibraryWSEndpoint {
@@ -26,7 +27,7 @@ public class BookLibraryWSEndpoint {
     private BookService bookService;
 
     @Autowired
-    public BookLibraryWSEndpoint(UserService userService, BookService bookService) {
+    public BookLibraryWSEndpoint(final UserService userService, final BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
@@ -70,12 +71,54 @@ public class BookLibraryWSEndpoint {
         final CreateUserResponse response = new CreateUserResponse();
         final ServiceStatus status = new ServiceStatus();
 
+        final String login = request.getLogin();
+
+        if (login.length() == 0) {
+
+            status.setStatusCode("BAD_REQUEST");
+            status.setMessage("Empty tag 'login'. ");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }
+
         userService.createUser(request.getLogin());
 
         status.setStatusCode("SUCCESS");
-        status.setMessage("Content Added Successfully");
+        status.setMessage("User Added Successfully.");
         response.setServiceStatus(status);
 
         return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserRequest")
+    @ResponsePayload
+    public DeleteUserResponse deleteUser(@RequestPayload DeleteUserRequest request) {
+
+        final DeleteUserResponse response = new DeleteUserResponse();
+        final ServiceStatus status = new ServiceStatus();
+
+        final Optional<UserEntity> userOptional = userService.getUserById(request.getId());
+
+        if (!userOptional.isPresent()) {
+
+            status.setStatusCode("NOT_FOUND");
+            status.setMessage("User with id " + request.getId() + " does not exist.");
+
+            response.setServiceStatus(status);
+
+            return response;
+        } else {
+
+            userService.deleteUser(userOptional.get());
+
+            status.setStatusCode("DELETED");
+            status.setMessage("User with id " + request.getId() + " deleted.");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }
     }
 }
