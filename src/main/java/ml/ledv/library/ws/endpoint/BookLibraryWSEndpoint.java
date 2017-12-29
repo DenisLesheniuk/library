@@ -122,35 +122,6 @@ public class BookLibraryWSEndpoint {
         }
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createBookRequest")
-    @ResponsePayload
-    public CreateBookResponse createBook(@RequestPayload final CreateBookRequest request) {
-
-        final CreateBookResponse response = new CreateBookResponse();
-        final ServiceStatus status = new ServiceStatus();
-
-        final String name = request.getName();
-
-        if (name.length() == 0) {
-            status.setStatusCode("BAD_REQUEST");
-            status.setMessage("Empty tag 'name'. ");
-
-            response.setServiceStatus(status);
-
-            return response;
-        } else {
-
-            bookService.createBook(name);
-
-            status.setStatusCode("SUCCESS");
-            status.setMessage("Book added Successfully");
-
-            response.setServiceStatus(status);
-
-            return response;
-        }
-    }
-
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getBooksRequest")
     @ResponsePayload
     public GetBooksResponse getBooks(@RequestPayload final GetBooksRequest request) {
@@ -183,4 +154,68 @@ public class BookLibraryWSEndpoint {
 
         return response;
     }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createBookRequest")
+    @ResponsePayload
+    public CreateBookResponse createBook(@RequestPayload final CreateBookRequest request) {
+
+        final CreateBookResponse response = new CreateBookResponse();
+        final ServiceStatus status = new ServiceStatus();
+
+        final String name = request.getName();
+
+        if (name.length() == 0) {
+            status.setStatusCode("BAD_REQUEST");
+            status.setMessage("Empty tag 'name'. ");
+
+            response.setServiceStatus(status);
+
+            return response;
+        } else {
+
+            bookService.createBook(name);
+
+            status.setStatusCode("SUCCESS");
+            status.setMessage("Book added Successfully");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteBookRequest")
+    @ResponsePayload
+    public DeleteBookResponse deleteBook(@RequestPayload final DeleteBookRequest request) {
+
+        final DeleteBookResponse response = new DeleteBookResponse();
+        final ServiceStatus status = new ServiceStatus();
+        final String id = request.getId();
+
+        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+
+        if (!bookOptional.isPresent()) {
+
+            status.setStatusCode("NOT_FOUND");
+            status.setMessage("Book with id " + id + " does not exist.");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }else {
+
+            bookService.deleteBook(bookOptional.get());
+
+            status.setStatusCode("DELETED");
+            status.setMessage("Deleted book with id " + id + ".");
+
+            response.setServiceStatus(status);
+
+            return response;
+        }
+    }
+
+    
+
+
 }
