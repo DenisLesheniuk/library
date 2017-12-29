@@ -277,7 +277,7 @@ public class BookLibraryWSEndpoint {
         }
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookReservation")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookReservationRequest")
     @ResponsePayload
     public CancelBookReservationResponse cancelBookReservation(@RequestPayload final CancelBookReservationRequest request) {
 
