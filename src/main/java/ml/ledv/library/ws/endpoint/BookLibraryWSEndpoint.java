@@ -147,7 +147,6 @@ public class BookLibraryWSEndpoint {
             bookInfo.setName(bookEntity.getName());
 
             bookInfos.add(bookInfo);
-
         }
 
         response.getBooks().addAll(bookInfos);
@@ -190,6 +189,7 @@ public class BookLibraryWSEndpoint {
 
         final DeleteBookResponse response = new DeleteBookResponse();
         final ServiceStatus status = new ServiceStatus();
+
         final String id = request.getId();
 
         final Optional<BookEntity> bookOptional = bookService.getBookById(id);
@@ -325,7 +325,7 @@ public class BookLibraryWSEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getFreeBooksRequest")
     @ResponsePayload
-    public GetFreeBooksResponse getFreeBooks(@RequestPayload GetFreeBooksRequest request){
+    public GetFreeBooksResponse getFreeBooks(@RequestPayload final GetFreeBooksRequest request) {
 
         final GetFreeBooksResponse response = new GetFreeBooksResponse();
 
@@ -350,7 +350,6 @@ public class BookLibraryWSEndpoint {
             booksInfo.add(bookInfo);
 
         }
-
         response.getBooks().addAll(booksInfo);
 
         return response;
