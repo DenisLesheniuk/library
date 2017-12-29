@@ -1,4 +1,4 @@
-package ml.ledv.library.ws.endpoints;
+package ml.ledv.library.ws.endpoint;
 
 import io.spring.guides.gs_producing_web_service.*;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
@@ -34,7 +34,7 @@ public class BookLibraryWSEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersRequest")
     @ResponsePayload
-    public GetUsersResponse getUsers(@RequestPayload GetUsersRequest request) {
+    public GetUsersResponse getUsers(@RequestPayload final GetUsersRequest request) {
 
         final GetUsersResponse response = new GetUsersResponse();
 
@@ -66,7 +66,7 @@ public class BookLibraryWSEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createUserRequest")
     @ResponsePayload
-    public CreateUserResponse createUser(@RequestPayload CreateUserRequest request) {
+    public CreateUserResponse createUser(@RequestPayload final CreateUserRequest request) {
 
         final CreateUserResponse response = new CreateUserResponse();
         final ServiceStatus status = new ServiceStatus();
@@ -94,7 +94,7 @@ public class BookLibraryWSEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserRequest")
     @ResponsePayload
-    public DeleteUserResponse deleteUser(@RequestPayload DeleteUserRequest request) {
+    public DeleteUserResponse deleteUser(@RequestPayload final DeleteUserRequest request) {
 
         final DeleteUserResponse response = new DeleteUserResponse();
         final ServiceStatus status = new ServiceStatus();
