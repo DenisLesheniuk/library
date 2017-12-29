@@ -202,7 +202,7 @@ public class BookLibraryWSEndpoint {
             response.setServiceStatus(status);
 
             return response;
-        }else {
+        } else {
 
             bookService.deleteBook(bookOptional.get());
 
@@ -215,7 +215,55 @@ public class BookLibraryWSEndpoint {
         }
     }
 
-    
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "reserveBookRequest")
+    @ResponsePayload
+    public ReserveBookResponse reserveBook(@RequestPayload final ReserveBookRequest request) {
 
+        final ReserveBookResponse response = new ReserveBookResponse();
+        final ServiceStatus status = new ServiceStatus();
 
+        final String userId = request.getUserId();
+        final String bookId = request.getBookId();
+
+        final Optional<UserEntity> userOptional = userService.getUserById(userId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+
+        if (!userOptional.isPresent()) {
+
+            status.setStatusCode("NOT_FOUND");
+            status.setMessage("User with id " + userId + " does not exist.");
+
+            response.setServiceStatus(status);
+
+            return response;
+        } else {
+
+            if (!bookOptional.isPresent()) {
+
+                status.setStatusCode("NOT_FOUND");
+                status.setMessage("Book with id " + bookId + " does not exist.");
+
+                response.setServiceStatus(status);
+
+                return response;
+            } else {
+
+                final UserEntity userEntity = userOptional.get();
+                final BookEntity bookEntity = bookOptional.get();
+
+                bookEntity.setUserEntity(userEntity);
+                userEntity.getBooks().add(bookEntity);
+
+                userService.updateUser(userEntity);
+                bookService.updateBook(bookEntity);
+
+                status.setStatusCode("SUCCESS");
+                status.setMessage("Book with id " + bookId + " reserved by User with id " + userId);
+
+                response.setServiceStatus(status);
+
+                return response;
+            }
+        }
+    }
 }

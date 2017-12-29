@@ -75,7 +75,7 @@ public class BookLibraryRestAPI {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Empty id field. "));
             } else {
 
-                Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+                final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
                 if (!bookOptional.isPresent()) {
                     return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + bookId));
