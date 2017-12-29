@@ -15,18 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for bookInfo complex type.
+ * <p>Java class for serviceStatus complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="bookInfo"&gt;
+ * &lt;complexType name="serviceStatus"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="userEntity" type="{http://spring.io/guides/gs-producing-web-service}userInfo"/&gt;
+ *         &lt;element name="statusCode" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -36,90 +35,63 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookInfo", propOrder = {
-    "id",
-    "name",
-    "userEntity"
+@XmlType(name = "serviceStatus", propOrder = {
+    "statusCode",
+    "message"
 })
-public class BookInfo {
+public class ServiceStatus {
 
     @XmlElement(required = true)
-    protected String id;
+    protected String statusCode;
     @XmlElement(required = true)
-    protected String name;
-    @XmlElement(required = true)
-    protected UserInfo userEntity;
+    protected String message;
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the statusCode property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getId() {
-        return id;
+    public String getStatusCode() {
+        return statusCode;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the statusCode property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setStatusCode(String value) {
+        this.statusCode = value;
     }
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
-    }
-
-    /**
-     * Gets the value of the userEntity property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link UserInfo }
-     *     
-     */
-    public UserInfo getUserEntity() {
-        return userEntity;
-    }
-
-    /**
-     * Sets the value of the userEntity property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link UserInfo }
-     *     
-     */
-    public void setUserEntity(UserInfo value) {
-        this.userEntity = value;
+    public void setMessage(String value) {
+        this.message = value;
     }
 
 }

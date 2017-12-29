@@ -25,7 +25,6 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="serviceStatus" type="tns:serviceStatus"/>
-                <xs:element name="userInfo" type="tns:userInfo"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

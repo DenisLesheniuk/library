@@ -1,9 +1,6 @@
 package ml.ledv.library.ws.endpoints;
 
-import io.spring.guides.gs_producing_web_service.BookInfo;
-import io.spring.guides.gs_producing_web_service.GetUsersRequest;
-import io.spring.guides.gs_producing_web_service.GetUsersResponse;
-import io.spring.guides.gs_producing_web_service.UserInfo;
+import io.spring.guides.gs_producing_web_service.*;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
@@ -37,10 +34,11 @@ public class BookLibraryWSEndpoint {
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersRequest")
     @ResponsePayload
     public GetUsersResponse getUsers(@RequestPayload GetUsersRequest request) {
+
         final GetUsersResponse response = new GetUsersResponse();
 
         final List<UserEntity> userEntities = userService.getAll();
-        final List<UserInfo> userInfos = new ArrayList<>();
+        final List<UserInfo> usersInfo = new ArrayList<>();
 
         for (UserEntity userEntity : userEntities) {
             final UserInfo userInfo = new UserInfo();
@@ -57,13 +55,27 @@ public class BookLibraryWSEndpoint {
             userInfo.setId(userEntity.getId());
             userInfo.setLogin(userEntity.getLogin());
 
-            userInfos.add(userInfo);
+            usersInfo.add(userInfo);
         }
 
-        response.getUserEntities().addAll(userInfos);
+        response.getUserEntities().addAll(usersInfo);
 
         return response;
     }
 
-    
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createUserRequest")
+    @ResponsePayload
+    public CreateUserResponse createUser(@RequestPayload CreateUserRequest request) {
+
+        final CreateUserResponse response = new CreateUserResponse();
+        final ServiceStatus status = new ServiceStatus();
+
+        userService.createUser(request.getLogin());
+
+        status.setStatusCode("SUCCESS");
+        status.setMessage("Content Added Successfully");
+        response.setServiceStatus(status);
+
+        return response;
+    }
 }
