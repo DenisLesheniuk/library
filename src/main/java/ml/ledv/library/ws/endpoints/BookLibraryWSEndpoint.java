@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Endpoint
-public class UsersEndpoint {
+public class BookLibraryWSEndpoint {
 
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
@@ -29,7 +29,7 @@ public class UsersEndpoint {
     private BookService bookService;
 
     @Autowired
-    public UsersEndpoint(UserService userService, BookService bookService) {
+    public BookLibraryWSEndpoint(UserService userService, BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
@@ -64,4 +64,6 @@ public class UsersEndpoint {
 
         return response;
     }
+
+    
 }
