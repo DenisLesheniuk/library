@@ -251,14 +251,70 @@ public class BookLibraryWSEndpoint {
                 final UserEntity userEntity = userOptional.get();
                 final BookEntity bookEntity = bookOptional.get();
 
-                bookEntity.setUserEntity(userEntity);
-                userEntity.getBooks().add(bookEntity);
+                if (bookEntity.getUserEntity() != null) {
+
+                    status.setStatusCode("BAD_REQUEST");
+                    status.setMessage("Book with id " + bookId + " already reserved");
+
+                    response.setServiceStatus(status);
+
+                    return response;
+                } else {
+                    bookEntity.setUserEntity(userEntity);
+                    userEntity.getBooks().add(bookEntity);
+
+                    userService.updateUser(userEntity);
+                    bookService.updateBook(bookEntity);
+
+                    status.setStatusCode("SUCCESS");
+                    status.setMessage("Book with id " + bookId + " reserved by User with id " + userId);
+
+                    response.setServiceStatus(status);
+
+                    return response;
+                }
+            }
+        }
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookReservation")
+    @ResponsePayload
+    public CancelBookReservationResponse cancelBookReservation(@RequestPayload final CancelBookReservationRequest request) {
+
+        final CancelBookReservationResponse response = new CancelBookReservationResponse();
+        final ServiceStatus status = new ServiceStatus();
+        final String id = request.getId();
+
+        if (id.length() == 0) {
+            status.setStatusCode("BAD_REQUEST");
+            status.setMessage("Empty tag 'id'. ");
+
+            response.setServiceStatus(status);
+
+            return response;
+        } else {
+            final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+
+            if (!bookOptional.isPresent()) {
+                status.setStatusCode("NOT_FOUND");
+                status.setMessage("Book with id " + id + " does not exist.");
+
+                response.setServiceStatus(status);
+
+                return response;
+            } else {
+
+                final BookEntity bookEntity = bookOptional.get();
+                final UserEntity userEntity = bookEntity.getUserEntity();
+
+                userEntity.getBooks().remove(bookEntity);
+                bookEntity.setUserEntity(null);
 
                 userService.updateUser(userEntity);
                 bookService.updateBook(bookEntity);
 
                 status.setStatusCode("SUCCESS");
-                status.setMessage("Book with id " + bookId + " reserved by User with id " + userId);
+                status.setMessage("Canceled reservation for book with id " + id);
 
                 response.setServiceStatus(status);
 
