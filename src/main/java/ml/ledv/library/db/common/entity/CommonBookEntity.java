@@ -1,12 +1,14 @@
-package ml.ledv.library.db;
+package ml.ledv.library.db.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
 @Entity(name = "book")
+@Document(collection = "book")
 public class CommonBookEntity {
 
     @Id

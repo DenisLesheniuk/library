@@ -1,12 +1,10 @@
 package ml.ledv.library.ws.endpoint;
 
 import io.spring.guides.gs_producing_web_service.*;
-import ml.ledv.library.db.CommonBookEntity;
-import ml.ledv.library.db.CommonUserEntity;
-import ml.ledv.library.db.sql.entity.impl.BookEntity;
-import ml.ledv.library.db.sql.entity.impl.UserEntity;
-import ml.ledv.library.db.sql.service.BookService;
-import ml.ledv.library.db.sql.service.UserService;
+import ml.ledv.library.db.common.entity.CommonBookEntity;
+import ml.ledv.library.db.common.entity.CommonUserEntity;
+import ml.ledv.library.db.common.service.CommonBookService;
+import ml.ledv.library.db.common.service.CommonUserService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +22,12 @@ public class BookLibraryWSEndpoint {
 
     private static final String NAMESPACE_URI = "http://spring.io/guides/gs-producing-web-service";
 
-    private UserService userService;
+    private CommonUserService userService;
 
-    private BookService bookService;
+    private CommonBookService bookService;
 
     @Autowired
-    public BookLibraryWSEndpoint(final UserService userService, final BookService bookService) {
+    public BookLibraryWSEndpoint(final CommonUserService userService, final CommonBookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }

@@ -1,11 +1,9 @@
 package ml.ledv.library.rest;
 
-import ml.ledv.library.db.CommonBookEntity;
-import ml.ledv.library.db.CommonUserEntity;
-import ml.ledv.library.db.sql.entity.impl.BookEntity;
-import ml.ledv.library.db.sql.entity.impl.UserEntity;
-import ml.ledv.library.db.sql.service.BookService;
-import ml.ledv.library.db.sql.service.UserService;
+import ml.ledv.library.db.common.entity.CommonBookEntity;
+import ml.ledv.library.db.common.entity.CommonUserEntity;
+import ml.ledv.library.db.common.service.CommonBookService;
+import ml.ledv.library.db.common.service.CommonUserService;
 import ml.ledv.library.rest.params.BookInfo;
 import ml.ledv.library.rest.params.UserParams;
 import ml.ledv.library.rest.responce.ErrorResponse;
@@ -21,12 +19,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class BookLibraryRestAPI {
 
-    private UserService userService;
+    private CommonUserService userService;
 
-    private BookService bookService;
+    private CommonBookService bookService;
 
     @Autowired
-    public BookLibraryRestAPI(final UserService userService, final BookService bookService) {
+    public BookLibraryRestAPI(final CommonUserService userService, final CommonBookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }

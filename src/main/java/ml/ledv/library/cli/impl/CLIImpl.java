@@ -2,15 +2,22 @@ package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
 import ml.ledv.library.cli.service.BookLibraryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
+@Service
 public class CLIImpl implements CLI {
 
     private BookLibraryService bookLibraryService;
 
+    private Scanner scanner;
+
+    @Autowired
     public CLIImpl(final BookLibraryService bookLibraryService) {
         this.bookLibraryService = bookLibraryService;
+        scanner = new Scanner(System.in);
     }
 
     @Override
@@ -27,7 +34,6 @@ public class CLIImpl implements CLI {
             System.out.println("6. Reserve book.");
             System.out.println("7. User service.");
 
-            final Scanner scanner = new Scanner(System.in);
             final String choice = scanner.nextLine();
 
             switch (choice) {
@@ -73,7 +79,6 @@ public class CLIImpl implements CLI {
         while (bookName == null) {
             System.out.println("Enter book name: ");
 
-            final Scanner scanner = new Scanner(System.in);
             bookName = scanner.nextLine();
         }
 
@@ -89,7 +94,6 @@ public class CLIImpl implements CLI {
         while (bookId == null) {
             System.out.println("Enter book name: ");
 
-            final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
         }
 
@@ -105,7 +109,6 @@ public class CLIImpl implements CLI {
         while (bookId == null) {
             System.out.println("Enter book id: ");
 
-            final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
         }
 
@@ -130,13 +133,11 @@ public class CLIImpl implements CLI {
         while (bookId == null) {
             System.out.println("Enter book id: ");
 
-            final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
         }
         while (userId == null) {
             System.out.println("Enter user id: ");
 
-            final Scanner scanner = new Scanner(System.in);
             userId = scanner.nextLine();
         }
 
@@ -155,7 +156,6 @@ public class CLIImpl implements CLI {
             System.out.println("3. Show all.");
             System.out.println("4. Back.");
 
-            final Scanner scanner = new Scanner(System.in);
             final String choice = scanner.nextLine();
             switch (choice) {
                 case "1": {
@@ -187,7 +187,6 @@ public class CLIImpl implements CLI {
         while (userLogin == null) {
             System.out.println("Enter user login: ");
 
-            final Scanner scanner = new Scanner(System.in);
             userLogin = scanner.nextLine();
         }
 
@@ -203,7 +202,6 @@ public class CLIImpl implements CLI {
         while (userId == null) {
             System.out.println("Enter user id: ");
 
-            final Scanner scanner = new Scanner(System.in);
             userId = scanner.nextLine();
         }
 

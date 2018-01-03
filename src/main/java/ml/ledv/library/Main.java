@@ -1,16 +1,19 @@
 package ml.ledv.library;
 
-import ml.ledv.library.cli.service.Initializer;
+import ml.ledv.library.cli.CLI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication
+
 public class Main implements CommandLineRunner {
     
     @Autowired
-    private Initializer initializer;
+    private CLI cli;
 
     public static void main(String args[]) {
         SpringApplication.run(Main.class, args);
@@ -18,6 +21,6 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        initializer.initialize();
+        cli.start();
     }
 }
