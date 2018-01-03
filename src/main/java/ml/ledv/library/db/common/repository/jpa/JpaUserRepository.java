@@ -1,7 +1,6 @@
 package ml.ledv.library.db.common.repository.jpa;
 
-import ml.ledv.library.db.common.entity.UserEntity;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import ml.ledv.library.db.common.repository.UserRepository;
 
-public interface JpaUserRepository extends PagingAndSortingRepository<UserEntity, String> {
+public interface JpaUserRepository extends UserRepository {
 }

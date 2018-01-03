@@ -2,6 +2,8 @@ package ml.ledv.library.db.common.service.impl;
 
 import ml.ledv.library.db.common.entity.BookEntity;
 import ml.ledv.library.db.common.entity.UserEntity;
+import ml.ledv.library.db.common.repository.BookRepository;
+import ml.ledv.library.db.common.repository.UserRepository;
 import ml.ledv.library.db.common.repository.jpa.JpaUserRepository;
 import ml.ledv.library.db.common.repository.mongo.MongoBookRepository;
 import ml.ledv.library.db.common.service.BookService;
@@ -14,9 +16,9 @@ import java.util.Optional;
 @Service()
 public class BookServiceImpl implements BookService {
 
-    private MongoBookRepository bookRepository;
+    private BookRepository bookRepository;
 
-    private JpaUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public BookServiceImpl(MongoBookRepository bookRepository, JpaUserRepository userRepository) {
