@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity(name = "book")
 @Document(collection = "book")
-public class CommonBookEntity {
+public class BookEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -23,9 +23,9 @@ public class CommonBookEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonBackReference
-    private CommonUserEntity user;
+    private UserEntity user;
 
-    public CommonBookEntity() {
+    public BookEntity() {
     }
 
     public String getId() {
@@ -44,17 +44,17 @@ public class CommonBookEntity {
         this.name = name;
     }
 
-    public CommonUserEntity getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public void setUser(final CommonUserEntity user) {
+    public void setUser(final UserEntity user) {
         this.user = user;
     }
 
     @Override
     public String toString() {
-        return "CommonBookEntity{" +
+        return "BookEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", user=" + user +

@@ -1,15 +1,15 @@
 package ml.ledv.library.rest.params;
 
-public class BookInfo {
+public class BookParam {
 
     private String id;
 
     private String name;
 
-    public BookInfo() {
+    public BookParam() {
     }
 
-    public BookInfo(final String id, final String name) {
+    public BookParam(final String id, final String name) {
         this.id = id;
         this.name = name;
     }

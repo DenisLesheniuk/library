@@ -1,6 +1,5 @@
 package ml.ledv.library.db.common.entity;
 
-import ml.ledv.library.db.common.entity.CommonBookEntity;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Entity(name = "user")
 @Document(collection = "user")
-public class CommonUserEntity {
+public class UserEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -22,9 +21,9 @@ public class CommonUserEntity {
 
     @DBRef(lazy = true)
     @OneToMany(fetch = FetchType.EAGER)
-    private List<CommonBookEntity> books;
+    private List<BookEntity> books;
 
-    public CommonUserEntity() {
+    public UserEntity() {
     }
 
     public String getId() {
@@ -43,11 +42,11 @@ public class CommonUserEntity {
         this.login = login;
     }
 
-    public List<CommonBookEntity> getBooks() {
+    public List<BookEntity> getBooks() {
         return books;
     }
 
-    public void setBooks(final List<CommonBookEntity> books) {
+    public void setBooks(final List<BookEntity> books) {
         this.books = books;
     }
 }

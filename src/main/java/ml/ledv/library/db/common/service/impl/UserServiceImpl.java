@@ -1,10 +1,10 @@
 package ml.ledv.library.db.common.service.impl;
 
-import ml.ledv.library.db.common.entity.CommonBookEntity;
-import ml.ledv.library.db.common.entity.CommonUserEntity;
+import ml.ledv.library.db.common.entity.BookEntity;
+import ml.ledv.library.db.common.entity.UserEntity;
 import ml.ledv.library.db.common.repository.jpa.JpaUserRepository;
 import ml.ledv.library.db.common.repository.mongo.MongoBookRepository;
-import ml.ledv.library.db.common.service.CommonUserService;
+import ml.ledv.library.db.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service()
-public class CommonUserServiceImpl implements CommonUserService {
+public class UserServiceImpl implements UserService {
 
     private JpaUserRepository userRepository;
 
     private MongoBookRepository bookRepository;
 
     @Autowired
-    public CommonUserServiceImpl(final JpaUserRepository userRepository, final MongoBookRepository bookRepository) {
+    public UserServiceImpl(final JpaUserRepository userRepository, final MongoBookRepository bookRepository) {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
     }
@@ -28,7 +28,7 @@ public class CommonUserServiceImpl implements CommonUserService {
     @Override
     public void createUser(final String login) {
 
-        final CommonUserEntity userEntity = new CommonUserEntity();
+        final UserEntity userEntity = new UserEntity();
         userEntity.setLogin(login);
         userEntity.setBooks(new ArrayList<>());
 
@@ -36,9 +36,9 @@ public class CommonUserServiceImpl implements CommonUserService {
     }
 
     @Override
-    public void deleteUser(final CommonUserEntity user) {
+    public void deleteUser(final UserEntity user) {
 
-        for (CommonBookEntity bookEntity: user.getBooks()){
+        for (BookEntity bookEntity: user.getBooks()){
             bookEntity.setUser(null);
             bookRepository.save(bookEntity);
         }
@@ -47,17 +47,17 @@ public class CommonUserServiceImpl implements CommonUserService {
     }
 
     @Override
-    public Optional<CommonUserEntity> getUserById(final String id) {
+    public Optional<UserEntity> getUserById(final String id) {
         return userRepository.findById(id);
     }
 
     @Override
-    public void updateUser(final CommonUserEntity user) {
+    public void updateUser(final UserEntity user) {
         userRepository.save(user);
     }
 
     @Override
-    public List<CommonUserEntity> getAll() {
-        return (List<CommonUserEntity>) userRepository.findAll();
+    public List<UserEntity> getAll() {
+        return (List<UserEntity>) userRepository.findAll();
     }
 }

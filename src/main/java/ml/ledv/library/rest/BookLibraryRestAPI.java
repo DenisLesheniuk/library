@@ -1,10 +1,10 @@
 package ml.ledv.library.rest;
 
-import ml.ledv.library.db.common.entity.CommonBookEntity;
-import ml.ledv.library.db.common.entity.CommonUserEntity;
-import ml.ledv.library.db.common.service.CommonBookService;
-import ml.ledv.library.db.common.service.CommonUserService;
-import ml.ledv.library.rest.params.BookInfo;
+import ml.ledv.library.db.common.entity.BookEntity;
+import ml.ledv.library.db.common.entity.UserEntity;
+import ml.ledv.library.db.common.service.BookService;
+import ml.ledv.library.db.common.service.UserService;
+import ml.ledv.library.rest.params.BookParam;
 import ml.ledv.library.rest.params.UserParams;
 import ml.ledv.library.rest.responce.ErrorResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class BookLibraryRestAPI {
 
-    private CommonUserService userService;
+    private UserService userService;
 
-    private CommonBookService bookService;
+    private BookService bookService;
 
     @Autowired
-    public BookLibraryRestAPI(final CommonUserService userService, final CommonBookService bookService) {
+    public BookLibraryRestAPI(final UserService userService, final BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
@@ -50,7 +50,7 @@ public class BookLibraryRestAPI {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable final String id) {
 
-        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
+        final Optional<UserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -61,9 +61,9 @@ public class BookLibraryRestAPI {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookInfo bookParams) {
+    public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookParam bookParams) {
 
-        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
+        final Optional<UserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Not found user with id. " + id));
@@ -75,14 +75,14 @@ public class BookLibraryRestAPI {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Empty id field. "));
             } else {
 
-                final Optional<CommonBookEntity> bookOptional = bookService.getBookById(bookId);
+                final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
                 if (!bookOptional.isPresent()) {
                     return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + bookId));
                 } else {
 
-                    final CommonUserEntity userEntity = userOptional.get();
-                    final CommonBookEntity bookEntity = bookOptional.get();
+                    final UserEntity userEntity = userOptional.get();
+                    final BookEntity bookEntity = bookOptional.get();
 
                     userEntity.getBooks().add(bookEntity);
                     bookEntity.setUser(userEntity);
@@ -97,7 +97,7 @@ public class BookLibraryRestAPI {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<?> createBook(@RequestBody final BookInfo bookParams) {
+    public ResponseEntity<?> createBook(@RequestBody final BookParam bookParams) {
 
         final String name = bookParams.getName();
 
@@ -117,7 +117,7 @@ public class BookLibraryRestAPI {
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable final String id) {
 
-        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -130,14 +130,14 @@ public class BookLibraryRestAPI {
     @PutMapping("/books/{id}")
     public ResponseEntity<?> cancelBookReservation(@PathVariable final String id) {
 
-        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + id));
         } else {
 
-            final CommonBookEntity bookEntity = bookOptional.get();
-            final CommonUserEntity userEntity = bookEntity.getUser();
+            final BookEntity bookEntity = bookOptional.get();
+            final UserEntity userEntity = bookEntity.getUser();
 
             bookEntity.setUser(null);
 

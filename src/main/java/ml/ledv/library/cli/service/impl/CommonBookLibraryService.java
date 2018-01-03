@@ -2,10 +2,10 @@ package ml.ledv.library.cli.service.impl;
 
 import ml.ledv.library.cli.service.BookLibraryService;
 
-import ml.ledv.library.db.common.entity.CommonBookEntity;
-import ml.ledv.library.db.common.entity.CommonUserEntity;
-import ml.ledv.library.db.common.service.CommonBookService;
-import ml.ledv.library.db.common.service.CommonUserService;
+import ml.ledv.library.db.common.entity.BookEntity;
+import ml.ledv.library.db.common.entity.UserEntity;
+import ml.ledv.library.db.common.service.BookService;
+import ml.ledv.library.db.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.Optional;
 @Service
 public class CommonBookLibraryService implements BookLibraryService {
 
-    private CommonUserService userService;
+    private UserService userService;
 
-    private CommonBookService bookService;
+    private BookService bookService;
 
     @Autowired
-    public CommonBookLibraryService(final CommonUserService userService, final CommonBookService bookService) {
+    public CommonBookLibraryService(final UserService userService, final BookService bookService) {
         this.userService = userService;
         this.bookService = bookService;
     }
@@ -32,7 +32,7 @@ public class CommonBookLibraryService implements BookLibraryService {
     @Override
     public void deleteBook(final String id) {
 
-        final Optional<CommonBookEntity> optionalBookEntity = bookService.getBookById(id);
+        final Optional<BookEntity> optionalBookEntity = bookService.getBookById(id);
 
         if (!optionalBookEntity.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");
@@ -45,28 +45,28 @@ public class CommonBookLibraryService implements BookLibraryService {
 
     @Override
     public void reserveBook(final String bookId, final String userId) {
-        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(bookId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + bookId + " is not exist! ");
             return;
         } else {
 
-            final CommonBookEntity book = bookOptional.get();
+            final BookEntity book = bookOptional.get();
 
             if (book.getUser() != null) {
                 System.out.println("Book " + book.getName() + " is reserved by " + book.getUser().getId());
                 return;
             } else {
 
-                final Optional<CommonUserEntity> userOptional = userService.getUserById(userId);
+                final Optional<UserEntity> userOptional = userService.getUserById(userId);
 
                 if (!userOptional.isPresent()) {
                     System.out.println("User with id " + userId + " is not exist! ");
                     return;
                 } else {
 
-                    final CommonUserEntity user = userOptional.get();
+                    final UserEntity user = userOptional.get();
 
                     book.setUser(user);
                     user.getBooks().add(book);
@@ -80,7 +80,7 @@ public class CommonBookLibraryService implements BookLibraryService {
 
     @Override
     public void showBooks() {
-        for (CommonBookEntity book : bookService.getAll()) {
+        for (BookEntity book : bookService.getAll()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:        " + book.getId());
@@ -95,7 +95,7 @@ public class CommonBookLibraryService implements BookLibraryService {
 
     @Override
     public void showFreeBook() {
-        for (CommonBookEntity book : bookService.getAllFree()) {
+        for (BookEntity book : bookService.getAllFree()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:        " + book.getId());
@@ -111,7 +111,7 @@ public class CommonBookLibraryService implements BookLibraryService {
 
     @Override
     public void deleteUser(final String id) {
-        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
+        final Optional<UserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             System.out.println("User with id " + id + " is not exist!");
@@ -123,13 +123,13 @@ public class CommonBookLibraryService implements BookLibraryService {
 
     @Override
     public void showUsers() {
-        for (CommonUserEntity user : userService.getAll()) {
+        for (UserEntity user : userService.getAll()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:           " + user.getId());
             System.out.println("User's login: " + user.getLogin());
             System.out.println("Books:        ");
-            for (CommonBookEntity book : user.getBooks()) {
+            for (BookEntity book : user.getBooks()) {
                 System.out.println();
                 System.out.println("-----------------------*********-----------------------");
                 System.out.println("Id:        " + book.getId());
@@ -143,7 +143,7 @@ public class CommonBookLibraryService implements BookLibraryService {
     @Override
     public void cancelReservation(final String id) {
 
-        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");
