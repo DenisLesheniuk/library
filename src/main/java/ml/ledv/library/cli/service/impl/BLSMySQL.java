@@ -2,6 +2,8 @@ package ml.ledv.library.cli.service.impl;
 
 import ml.ledv.library.cli.service.BookLibraryService;
 
+import ml.ledv.library.db.CommonBookEntity;
+import ml.ledv.library.db.CommonUserEntity;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
@@ -32,7 +34,7 @@ public class BLSMySQL implements BookLibraryService {
     @Override
     public void deleteBook(final String id) {
 
-        final Optional<BookEntity> optionalBookEntity = bookService.getBookById(id);
+        final Optional<CommonBookEntity> optionalBookEntity = bookService.getBookById(id);
 
         if (!optionalBookEntity.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");
@@ -45,30 +47,30 @@ public class BLSMySQL implements BookLibraryService {
 
     @Override
     public void reserveBook(final String bookId, final String userId) {
-        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + bookId + " is not exist! ");
             return;
         } else {
 
-            final BookEntity book = bookOptional.get();
+            final CommonBookEntity book = bookOptional.get();
 
-            if (book.getUserEntity() != null) {
-                System.out.println("Book " + book.getName() + " is reserved by " + book.getUserEntity().getId());
+            if (book.getUser() != null) {
+                System.out.println("Book " + book.getName() + " is reserved by " + book.getUser().getId());
                 return;
             } else {
 
-                final Optional<UserEntity> userOptional = userService.getUserById(userId);
+                final Optional<CommonUserEntity> userOptional = userService.getUserById(userId);
 
                 if (!userOptional.isPresent()) {
                     System.out.println("User with id " + userId + " is not exist! ");
                     return;
                 } else {
 
-                    final UserEntity user = userOptional.get();
+                    final CommonUserEntity user = userOptional.get();
 
-                    book.setUserEntity(user);
+                    book.setUser(user);
                     user.getBooks().add(book);
 
                     bookService.updateBook(book);
@@ -80,14 +82,14 @@ public class BLSMySQL implements BookLibraryService {
 
     @Override
     public void showBooks() {
-        for (BookEntity book : bookService.getAll()) {
+        for (CommonBookEntity book : bookService.getAll()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:        " + book.getId());
             System.out.println("Book name: " + book.getName());
-            if (book.getUserEntity() != null) {
-                System.out.println("User:      " + "id    " + book.getUserEntity().getId());
-                System.out.println("           login " + book.getUserEntity().getLogin());
+            if (book.getUser() != null) {
+                System.out.println("User:      " + "id    " + book.getUser().getId());
+                System.out.println("           login " + book.getUser().getLogin());
             }
             System.out.println("******************************************************");
         }
@@ -95,7 +97,7 @@ public class BLSMySQL implements BookLibraryService {
 
     @Override
     public void showFreeBook() {
-        for (BookEntity book : bookService.getAllFree()) {
+        for (CommonBookEntity book : bookService.getAllFree()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:        " + book.getId());
@@ -111,7 +113,7 @@ public class BLSMySQL implements BookLibraryService {
 
     @Override
     public void deleteUser(final String id) {
-        final Optional<UserEntity> userOptional = userService.getUserById(id);
+        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             System.out.println("User with id " + id + " is not exist!");
@@ -123,13 +125,13 @@ public class BLSMySQL implements BookLibraryService {
 
     @Override
     public void showUsers() {
-        for (UserEntity user : userService.getAll()) {
+        for (CommonUserEntity user : userService.getAll()) {
             System.out.println();
             System.out.println("******************************************************");
             System.out.println("Id:           " + user.getId());
             System.out.println("User's login: " + user.getLogin());
             System.out.println("Books:        ");
-            for (BookEntity book : user.getBooks()) {
+            for (CommonBookEntity book : user.getBooks()) {
                 System.out.println();
                 System.out.println("-----------------------*********-----------------------");
                 System.out.println("Id:        " + book.getId());
@@ -143,7 +145,7 @@ public class BLSMySQL implements BookLibraryService {
     @Override
     public void cancelReservation(final String id) {
 
-        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             System.out.println("Book with id " + id + " is not exist!");

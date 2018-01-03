@@ -1,6 +1,8 @@
 package ml.ledv.library.ws.endpoint;
 
 import io.spring.guides.gs_producing_web_service.*;
+import ml.ledv.library.db.CommonBookEntity;
+import ml.ledv.library.db.CommonUserEntity;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
@@ -38,13 +40,13 @@ public class BookLibraryWSEndpoint {
 
         final GetUsersResponse response = new GetUsersResponse();
 
-        final List<UserEntity> userEntities = userService.getAll();
+        final List<CommonUserEntity> userEntities = userService.getAll();
         final List<UserInfo> usersInfo = new ArrayList<>();
 
-        for (UserEntity userEntity : userEntities) {
+        for (CommonUserEntity userEntity : userEntities) {
             final UserInfo userInfo = new UserInfo();
             if (userEntity.getBooks().size() > 0) {
-                for (BookEntity bookEntity : userEntity.getBooks()) {
+                for (CommonBookEntity bookEntity : userEntity.getBooks()) {
 
                     final BookInfo bookInfo = new BookInfo();
                     BeanUtils.copyProperties(bookEntity, bookInfo);
@@ -99,7 +101,7 @@ public class BookLibraryWSEndpoint {
         final DeleteUserResponse response = new DeleteUserResponse();
         final ServiceStatus status = new ServiceStatus();
 
-        final Optional<UserEntity> userOptional = userService.getUserById(request.getId());
+        final Optional<CommonUserEntity> userOptional = userService.getUserById(request.getId());
 
         if (!userOptional.isPresent()) {
 
@@ -128,18 +130,18 @@ public class BookLibraryWSEndpoint {
 
         final GetBooksResponse response = new GetBooksResponse();
 
-        final List<BookEntity> bookEntities = bookService.getAll();
+        final List<CommonBookEntity> bookEntities = bookService.getAll();
         final List<BookInfo> bookInfos = new ArrayList<>();
 
-        for (BookEntity bookEntity : bookEntities) {
+        for (CommonBookEntity bookEntity : bookEntities) {
 
             final BookInfo bookInfo = new BookInfo();
 
-            if (bookEntity.getUserEntity() != null) {
+            if (bookEntity.getUser() != null) {
 
                 final UserInfo userInfo = new UserInfo();
 
-                BeanUtils.copyProperties(bookEntity.getUserEntity(), userInfo);
+                BeanUtils.copyProperties(bookEntity.getUser(), userInfo);
                 bookInfo.setUserEntity(userInfo);
             }
 
@@ -192,7 +194,7 @@ public class BookLibraryWSEndpoint {
 
         final String id = request.getId();
 
-        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
 
@@ -225,8 +227,8 @@ public class BookLibraryWSEndpoint {
         final String userId = request.getUserId();
         final String bookId = request.getBookId();
 
-        final Optional<UserEntity> userOptional = userService.getUserById(userId);
-        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+        final Optional<CommonUserEntity> userOptional = userService.getUserById(userId);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!userOptional.isPresent()) {
 
@@ -248,10 +250,10 @@ public class BookLibraryWSEndpoint {
                 return response;
             } else {
 
-                final UserEntity userEntity = userOptional.get();
-                final BookEntity bookEntity = bookOptional.get();
+                final CommonUserEntity userEntity = userOptional.get();
+                final CommonBookEntity bookEntity = bookOptional.get();
 
-                if (bookEntity.getUserEntity() != null) {
+                if (bookEntity.getUser() != null) {
 
                     status.setStatusCode("BAD_REQUEST");
                     status.setMessage("Book with id " + bookId + " already reserved");
@@ -260,7 +262,7 @@ public class BookLibraryWSEndpoint {
 
                     return response;
                 } else {
-                    bookEntity.setUserEntity(userEntity);
+                    bookEntity.setUser(userEntity);
                     userEntity.getBooks().add(bookEntity);
 
                     userService.updateUser(userEntity);
@@ -293,7 +295,7 @@ public class BookLibraryWSEndpoint {
 
             return response;
         } else {
-            final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+            final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
 
             if (!bookOptional.isPresent()) {
                 status.setStatusCode("NOT_FOUND");
@@ -304,11 +306,11 @@ public class BookLibraryWSEndpoint {
                 return response;
             } else {
 
-                final BookEntity bookEntity = bookOptional.get();
-                final UserEntity userEntity = bookEntity.getUserEntity();
+                final CommonBookEntity bookEntity = bookOptional.get();
+                final CommonUserEntity userEntity = bookEntity.getUser();
 
                 userEntity.getBooks().remove(bookEntity);
-                bookEntity.setUserEntity(null);
+                bookEntity.setUser(null);
 
                 userService.updateUser(userEntity);
                 bookService.updateBook(bookEntity);
@@ -329,18 +331,18 @@ public class BookLibraryWSEndpoint {
 
         final GetFreeBooksResponse response = new GetFreeBooksResponse();
 
-        final List<BookEntity> bookEntities = bookService.getAllFree();
+        final List<CommonBookEntity> bookEntities = bookService.getAllFree();
         final List<BookInfo> booksInfo = new ArrayList<>();
 
-        for (BookEntity bookEntity : bookEntities) {
+        for (CommonBookEntity bookEntity : bookEntities) {
 
             final BookInfo bookInfo = new BookInfo();
 
-            if (bookEntity.getUserEntity() != null) {
+            if (bookEntity.getUser() != null) {
 
                 final UserInfo userInfo = new UserInfo();
 
-                BeanUtils.copyProperties(bookEntity.getUserEntity(), userInfo);
+                BeanUtils.copyProperties(bookEntity.getUser(), userInfo);
                 bookInfo.setUserEntity(userInfo);
             }
 

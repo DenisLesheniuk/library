@@ -1,6 +1,6 @@
 package ml.ledv.library.db.sql.service;
 
-import ml.ledv.library.db.sql.entity.impl.BookEntity;
+import ml.ledv.library.db.CommonBookEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,15 +9,15 @@ public interface BookService {
 
     void createBook(String name);
 
-    void deleteBook(BookEntity book);
+    void deleteBook(CommonBookEntity book);
 
-    List<BookEntity> getAll();
+    List<CommonBookEntity> getAll();
 
-    List<BookEntity> getAllFree();
+    List<CommonBookEntity> getAllFree();
 
-    Optional<BookEntity> getBookById(String id);
+    Optional<CommonBookEntity> getBookById(String id);
 
-    void updateBook(BookEntity book);
+    void updateBook(CommonBookEntity book);
 
-    void removeUser(BookEntity book);
+    void removeUser(CommonBookEntity book);
 }

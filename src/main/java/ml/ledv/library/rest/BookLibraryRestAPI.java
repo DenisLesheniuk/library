@@ -1,5 +1,7 @@
 package ml.ledv.library.rest;
 
+import ml.ledv.library.db.CommonBookEntity;
+import ml.ledv.library.db.CommonUserEntity;
 import ml.ledv.library.db.sql.entity.impl.BookEntity;
 import ml.ledv.library.db.sql.entity.impl.UserEntity;
 import ml.ledv.library.db.sql.service.BookService;
@@ -50,7 +52,7 @@ public class BookLibraryRestAPI {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable final String id) {
 
-        final Optional<UserEntity> userOptional = userService.getUserById(id);
+        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -63,7 +65,7 @@ public class BookLibraryRestAPI {
     @PutMapping("/users/{id}")
     public ResponseEntity<?> reserveBook(@PathVariable final String id, @RequestBody final BookInfo bookParams) {
 
-        final Optional<UserEntity> userOptional = userService.getUserById(id);
+        final Optional<CommonUserEntity> userOptional = userService.getUserById(id);
 
         if (!userOptional.isPresent()) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Not found user with id. " + id));
@@ -75,17 +77,17 @@ public class BookLibraryRestAPI {
                 return ResponseEntity.badRequest().body(new ErrorResponse("Empty id field. "));
             } else {
 
-                final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+                final Optional<CommonBookEntity> bookOptional = bookService.getBookById(bookId);
 
                 if (!bookOptional.isPresent()) {
                     return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + bookId));
                 } else {
 
-                    final UserEntity userEntity = userOptional.get();
-                    final BookEntity bookEntity = bookOptional.get();
+                    final CommonUserEntity userEntity = userOptional.get();
+                    final CommonBookEntity bookEntity = bookOptional.get();
 
                     userEntity.getBooks().add(bookEntity);
-                    bookEntity.setUserEntity(userEntity);
+                    bookEntity.setUser(userEntity);
 
                     bookService.updateBook(bookEntity);
                     userService.updateUser(userEntity);
@@ -117,7 +119,7 @@ public class BookLibraryRestAPI {
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable final String id) {
 
-        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             return ResponseEntity.notFound().build();
@@ -130,16 +132,16 @@ public class BookLibraryRestAPI {
     @PutMapping("/books/{id}")
     public ResponseEntity<?> cancelBookReservation(@PathVariable final String id) {
 
-        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
+        final Optional<CommonBookEntity> bookOptional = bookService.getBookById(id);
 
         if (!bookOptional.isPresent()) {
             return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + id));
         } else {
 
-            final BookEntity bookEntity = bookOptional.get();
-            final UserEntity userEntity = bookEntity.getUserEntity();
+            final CommonBookEntity bookEntity = bookOptional.get();
+            final CommonUserEntity userEntity = bookEntity.getUser();
 
-            bookEntity.setUserEntity(null);
+            bookEntity.setUser(null);
 
             userEntity.getBooks().remove(bookEntity);
 

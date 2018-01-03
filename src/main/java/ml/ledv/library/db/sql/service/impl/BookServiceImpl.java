@@ -1,10 +1,10 @@
 package ml.ledv.library.db.sql.service.impl;
 
 
-import ml.ledv.library.db.sql.entity.impl.BookEntity;
-import ml.ledv.library.db.sql.entity.impl.UserEntity;
-import ml.ledv.library.db.sql.repository.BookRepositorySQL;
-import ml.ledv.library.db.sql.repository.UserRepositorySQL;
+import ml.ledv.library.db.CommonBookEntity;
+import ml.ledv.library.db.CommonUserEntity;
+import ml.ledv.library.db.repository.CommonBookRepository;
+import ml.ledv.library.db.repository.CommonUserRepository;
 import ml.ledv.library.db.sql.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,55 +15,55 @@ import java.util.Optional;
 @Service("bookServiceImplSQL")
 public class BookServiceImpl implements BookService {
 
-    private BookRepositorySQL bookRepository;
+    private CommonBookRepository bookRepository;
 
-    private UserRepositorySQL userRepository;
+    private CommonUserRepository userRepository;
 
     @Autowired
-    public BookServiceImpl(BookRepositorySQL bookRepository, UserRepositorySQL userRepository) {
+    public BookServiceImpl(CommonBookRepository  bookRepository, CommonUserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
     }
 
     @Override
     public void createBook(final String name) {
-        final BookEntity bookEntity = new BookEntity();
+        final CommonBookEntity bookEntity = new CommonBookEntity();
         bookEntity.setName(name);
 
         bookRepository.save(bookEntity);
     }
 
     @Override
-    public void deleteBook(final BookEntity book) {
+    public void deleteBook(final CommonBookEntity book) {
         bookRepository.delete(book);
     }
 
     @Override
-    public List<BookEntity> getAll() {
-        return (List<BookEntity>) bookRepository.findAll();
+    public List<CommonBookEntity> getAll() {
+        return (List<CommonBookEntity>) bookRepository.findAll();
     }
 
     @Override
-    public List<BookEntity> getAllFree() {
-        return bookRepository.getBookEntitiesByUserEntityIsNull();
+    public List<CommonBookEntity> getAllFree() {
+        return bookRepository.getCommonBookEntitiesByUserIsNull();
     }
 
     @Override
-    public Optional<BookEntity> getBookById(final String id) {
+    public Optional<CommonBookEntity> getBookById(final String id) {
         return bookRepository.findById(id);
     }
 
     @Override
-    public void updateBook(final BookEntity book) {
+    public void updateBook(final CommonBookEntity book) {
         bookRepository.save(book);
     }
 
     @Override
-    public void removeUser(final BookEntity book) {
+    public void removeUser(final CommonBookEntity book) {
 
-        final UserEntity userEntity = book.getUserEntity();
+        final CommonUserEntity userEntity = book.getUser();
 
-        book.setUserEntity(null);
+        book.setUser(null);
 
         userEntity.getBooks().remove(book);
 
