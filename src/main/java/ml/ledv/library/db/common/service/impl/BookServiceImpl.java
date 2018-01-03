@@ -1,6 +1,5 @@
 package ml.ledv.library.db.common.service.impl;
 
-
 import ml.ledv.library.db.common.entity.BookEntity;
 import ml.ledv.library.db.common.entity.UserEntity;
 import ml.ledv.library.db.common.repository.jpa.JpaUserRepository;

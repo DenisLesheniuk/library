@@ -118,11 +118,11 @@ public class CLIImpl implements CLI {
     }
 
     private void showAll() {
-      bookLibraryService.showBooks();
+        bookLibraryService.showBooks();
     }
 
     private void showAllFree() {
-      bookLibraryService.showFreeBook();
+        bookLibraryService.showFreeBook();
     }
 
     private void reserveBook() {

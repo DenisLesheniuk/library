@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(final UserEntity user) {
 
-        for (BookEntity bookEntity: user.getBooks()){
+        for (BookEntity bookEntity : user.getBooks()) {
             bookEntity.setUser(null);
             bookRepository.save(bookEntity);
         }
