@@ -1,4 +1,4 @@
-package ml.ledv.library.db.common.entity;
+package ml.ledv.library.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity(name = "book")
-
 public class BookEntity {
 
     @Id

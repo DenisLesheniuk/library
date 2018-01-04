@@ -1,17 +1,17 @@
-package ml.ledv.library.db.common.service.impl;
+package ml.ledv.library.db.service.impl;
 
-import ml.ledv.library.db.common.entity.BookEntity;
-import ml.ledv.library.db.common.entity.UserEntity;
-import ml.ledv.library.db.common.repository.BookRepository;
-import ml.ledv.library.db.common.repository.UserRepository;
-import ml.ledv.library.db.common.service.BookService;
+import ml.ledv.library.db.entity.BookEntity;
+import ml.ledv.library.db.entity.UserEntity;
+import ml.ledv.library.db.repository.BookRepository;
+import ml.ledv.library.db.repository.UserRepository;
+import ml.ledv.library.db.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service()
+@Service
 public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;

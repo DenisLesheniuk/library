@@ -1,10 +1,10 @@
 package ml.ledv.library.ws.endpoint;
 
 import io.spring.guides.gs_producing_web_service.*;
-import ml.ledv.library.db.common.entity.BookEntity;
-import ml.ledv.library.db.common.entity.UserEntity;
-import ml.ledv.library.db.common.service.BookService;
-import ml.ledv.library.db.common.service.UserService;
+import ml.ledv.library.db.entity.BookEntity;
+import ml.ledv.library.db.entity.UserEntity;
+import ml.ledv.library.db.service.BookService;
+import ml.ledv.library.db.service.UserService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

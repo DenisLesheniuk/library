@@ -11,7 +11,6 @@ repositories {
     }
 }
 
-// tag::xsd[]
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
@@ -47,13 +46,11 @@ task genJaxb {
         }
     }
 }
-// end::xsd[]
 
 task afterEclipseImport {
     dependsOn "genJaxb"
 }
 
-// tag::jaxb[]
 configurations {
     jaxb
 }
@@ -64,16 +61,17 @@ jar {
     from genJaxb.classesDir
 }
 
-// tag::dependencies[]
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
+    //Dependencies for using MySQL
     /* compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
      runtime('mysql:mysql-connector-java:5.1.6')*/
 
+    //Dependencies for using MongoDB
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
     compile group: 'org.hibernate.ogm', name: 'hibernate-ogm-core', version: '5.1.0.Final'
 

@@ -22,7 +22,8 @@ public class CLIImpl implements CLI {
 
     @Override
     public void start() {
-        System.out.println(bookLibraryService);
+
+        String choice;
 
         while (true) {
 
@@ -34,7 +35,7 @@ public class CLIImpl implements CLI {
             System.out.println("6. Reserve book.");
             System.out.println("7. User service.");
 
-            final String choice = scanner.nextLine();
+            choice = scanner.nextLine();
 
             switch (choice) {
                 case "1": {
@@ -77,8 +78,8 @@ public class CLIImpl implements CLI {
         String bookName = null;
 
         while (bookName == null) {
-            System.out.println("Enter book name: ");
 
+            System.out.println("Enter book name: ");
             bookName = scanner.nextLine();
         }
 
@@ -92,8 +93,8 @@ public class CLIImpl implements CLI {
         String bookId = null;
 
         while (bookId == null) {
-            System.out.println("Enter book name: ");
 
+            System.out.println("Enter book name: ");
             bookId = scanner.nextLine();
         }
 
@@ -107,8 +108,8 @@ public class CLIImpl implements CLI {
         String bookId = null;
 
         while (bookId == null) {
+            
             System.out.println("Enter book id: ");
-
             bookId = scanner.nextLine();
         }
 
@@ -131,13 +132,13 @@ public class CLIImpl implements CLI {
         String userId = null;
 
         while (bookId == null) {
-            System.out.println("Enter book id: ");
 
+            System.out.println("Enter book id: ");
             bookId = scanner.nextLine();
         }
         while (userId == null) {
-            System.out.println("Enter user id: ");
 
+            System.out.println("Enter user id: ");
             userId = scanner.nextLine();
         }
 
@@ -147,16 +148,19 @@ public class CLIImpl implements CLI {
     }
 
     private void userServiceMenu() {
+
+        String choice;
+
         while (true) {
 
             System.out.println("UserDocument service menu.");
-
             System.out.println("1. Create User");
             System.out.println("2. Delete User");
             System.out.println("3. Show all.");
             System.out.println("4. Back.");
 
-            final String choice = scanner.nextLine();
+            choice = scanner.nextLine();
+
             switch (choice) {
                 case "1": {
                     addUserMenu();
@@ -185,8 +189,8 @@ public class CLIImpl implements CLI {
         String userLogin = null;
 
         while (userLogin == null) {
-            System.out.println("Enter user login: ");
 
+            System.out.println("Enter user login: ");
             userLogin = scanner.nextLine();
         }
 
@@ -200,8 +204,8 @@ public class CLIImpl implements CLI {
         String userId = null;
 
         while (userId == null) {
-            System.out.println("Enter user id: ");
 
+            System.out.println("Enter user id: ");
             userId = scanner.nextLine();
         }
 

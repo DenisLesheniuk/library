@@ -1,4 +1,4 @@
-package ml.ledv.library.db.common.entity;
+package ml.ledv.library.db.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,7 +11,6 @@ public class UserEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-
     private String id;
 
     private String login;
