@@ -2,24 +2,20 @@ package ml.ledv.library.db.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
 @Entity(name = "book")
-@Document(collection = "book")
+
 public class BookEntity {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @org.springframework.data.annotation.Id
     private String id;
 
     private String name;
 
-    @DBRef(lazy = true)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @JsonBackReference

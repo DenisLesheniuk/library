@@ -4,8 +4,6 @@ import ml.ledv.library.db.common.entity.BookEntity;
 import ml.ledv.library.db.common.entity.UserEntity;
 import ml.ledv.library.db.common.repository.BookRepository;
 import ml.ledv.library.db.common.repository.UserRepository;
-import ml.ledv.library.db.common.repository.jpa.JpaUserRepository;
-import ml.ledv.library.db.common.repository.mongo.MongoBookRepository;
 import ml.ledv.library.db.common.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private BookRepository bookRepository;
 
     @Autowired
-    public UserServiceImpl(final JpaUserRepository userRepository, final MongoBookRepository bookRepository) {
+    public UserServiceImpl(final UserRepository userRepository, final BookRepository bookRepository) {
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;
     }
