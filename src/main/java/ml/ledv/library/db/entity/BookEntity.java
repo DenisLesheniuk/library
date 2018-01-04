@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "book")
 public class BookEntity {
@@ -15,9 +16,8 @@ public class BookEntity {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
     @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity user;
 
     public BookEntity() {
@@ -54,5 +54,21 @@ public class BookEntity {
                 ", name='" + name + '\'' +
                 ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookEntity that = (BookEntity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, user);
     }
 }

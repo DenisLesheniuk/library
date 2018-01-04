@@ -1,22 +1,28 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
-import ml.ledv.library.cli.service.BookLibraryService;
+import ml.ledv.library.db.entity.BookEntity;
+import ml.ledv.library.db.entity.UserEntity;
+import ml.ledv.library.db.service.BookService;
+import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 @Service
 public class CLIImpl implements CLI {
 
-    private BookLibraryService bookLibraryService;
+    private UserService userService;
+    private BookService bookService;
 
     private Scanner scanner;
 
     @Autowired
-    public CLIImpl(final BookLibraryService bookLibraryService) {
-        this.bookLibraryService = bookLibraryService;
+    public CLIImpl(final UserService userService, final BookService bookService) {
+        this.userService = userService;
+        this.bookService = bookService;
         scanner = new Scanner(System.in);
     }
 
@@ -78,12 +84,11 @@ public class CLIImpl implements CLI {
         String bookName = null;
 
         while (bookName == null) {
-
             System.out.println("Enter book name: ");
             bookName = scanner.nextLine();
         }
 
-        bookLibraryService.createBook(bookName);
+        bookService.createBook(bookName);
 
         System.out.println("Created book - " + bookName);
     }
@@ -93,12 +98,18 @@ public class CLIImpl implements CLI {
         String bookId = null;
 
         while (bookId == null) {
-
             System.out.println("Enter book name: ");
             bookId = scanner.nextLine();
         }
 
-        bookLibraryService.deleteBook(bookId);
+        final Optional<BookEntity> optionalBookEntity = bookService.getBookById(bookId);
+
+        if (!optionalBookEntity.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist!");
+            return;
+        } else {
+            bookService.deleteBook(optionalBookEntity.get());
+        }
 
         System.out.println("Deleted book - " + bookId);
     }
@@ -108,22 +119,46 @@ public class CLIImpl implements CLI {
         String bookId = null;
 
         while (bookId == null) {
-            
             System.out.println("Enter book id: ");
             bookId = scanner.nextLine();
         }
 
-        bookLibraryService.cancelReservation(bookId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+
+        if (!bookOptional.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist!");
+            return;
+        } else {
+            bookService.removeUser(bookOptional.get());
+        }
 
         System.out.println("BookDocument is returned - " + bookId);
     }
 
     private void showAll() {
-        bookLibraryService.showBooks();
+
+        for (BookEntity book : bookService.getAll()) {
+            System.out.println();
+            System.out.println("******************************************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            if (book.getUser() != null) {
+                System.out.println("User:      " + "id    " + book.getUser().getId());
+                System.out.println("           login " + book.getUser().getLogin());
+            }
+            System.out.println("******************************************************");
+        }
     }
 
     private void showAllFree() {
-        bookLibraryService.showFreeBook();
+
+        for (BookEntity book : bookService.getAllFree()) {
+            System.out.println();
+            System.out.println("******************************************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            System.out.println("******************************************************");
+        }
     }
 
     private void reserveBook() {
@@ -142,7 +177,37 @@ public class CLIImpl implements CLI {
             userId = scanner.nextLine();
         }
 
-        bookLibraryService.reserveBook(bookId, userId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+
+        if (!bookOptional.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist! ");
+            return;
+        } else {
+
+            final BookEntity book = bookOptional.get();
+
+            if (book.getUser() != null) {
+                System.out.println("Book " + book.getName() + " is reserved by " + book.getUser().getId());
+                return;
+            } else {
+
+                final Optional<UserEntity> userOptional = userService.getUserById(userId);
+
+                if (!userOptional.isPresent()) {
+                    System.out.println("User with id " + userId + " is not exist! ");
+                    return;
+                } else {
+
+                    final UserEntity user = userOptional.get();
+
+                    book.setUser(user);
+                    user.getBooks().add(book);
+
+                    bookService.updateBook(book);
+                    userService.updateUser(user);
+                }
+            }
+        }
 
         System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId);
     }
@@ -189,12 +254,11 @@ public class CLIImpl implements CLI {
         String userLogin = null;
 
         while (userLogin == null) {
-
             System.out.println("Enter user login: ");
             userLogin = scanner.nextLine();
         }
 
-        bookLibraryService.createUser(userLogin);
+        userService.createUser(userLogin);
 
         System.out.println("Created user - " + userLogin);
     }
@@ -209,12 +273,34 @@ public class CLIImpl implements CLI {
             userId = scanner.nextLine();
         }
 
-        bookLibraryService.deleteUser(userId);
+        final Optional<UserEntity> userOptional = userService.getUserById(userId);
+
+        if (!userOptional.isPresent()) {
+            System.out.println("User with id " + userId + " is not exist!");
+            return;
+        } else {
+            userService.deleteUser(userOptional.get());
+        }
 
         System.out.println("Deleted user - " + userId);
     }
 
     private void showUsers() {
-        bookLibraryService.showUsers();
+
+        for (UserEntity user : userService.getAll()) {
+            System.out.println();
+            System.out.println("******************************************************");
+            System.out.println("Id:           " + user.getId());
+            System.out.println("User's login: " + user.getLogin());
+            System.out.println("Books:        ");
+            for (BookEntity book : user.getBooks()) {
+                System.out.println();
+                System.out.println("-----------------------*********-----------------------");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("-------------------------------------------------------");
+            }
+            System.out.println("******************************************************");
+        }
     }
 }

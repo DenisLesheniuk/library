@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "user")
 public class UserEntity {
@@ -15,7 +16,7 @@ public class UserEntity {
 
     private String login;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<BookEntity> books;
 
     public UserEntity() {
@@ -43,5 +44,21 @@ public class UserEntity {
 
     public void setBooks(final List<BookEntity> books) {
         this.books = books;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(login, that.login) &&
+                Objects.equals(books, that.books);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, login, books);
     }
 }

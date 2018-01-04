@@ -68,7 +68,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     //Dependencies for using MySQL
-    /* compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
+  /*   compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
      runtime('mysql:mysql-connector-java:5.1.6')*/
 
     //Dependencies for using MongoDB
