@@ -85,9 +85,7 @@ public class BookLibraryRestAPI {
                     final BookEntity bookEntity = bookOptional.get();
 
                     userEntity.getBooks().add(bookEntity);
-                    bookEntity.setUser(userEntity);
 
-                    bookService.updateBook(bookEntity);
                     userService.updateUser(userEntity);
 
                     return ResponseEntity.ok().build();
@@ -137,14 +135,14 @@ public class BookLibraryRestAPI {
         } else {
 
             final BookEntity bookEntity = bookOptional.get();
-            final UserEntity userEntity = bookEntity.getUser();
+           // final UserEntity userEntity = bookEntity.getUser();
 
-            bookEntity.setUser(null);
+            //bookEntity.setUser(null);
 
-            userEntity.getBooks().remove(bookEntity);
+           // userEntity.getBooks().remove(bookEntity);
 
             bookService.updateBook(bookEntity);
-            userService.updateUser(userEntity);
+           // userService.updateUser(userEntity);
 
             return ResponseEntity.ok().build();
         }

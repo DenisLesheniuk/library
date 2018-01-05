@@ -43,30 +43,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookEntity> getAllFree() {
-        return bookRepository.getCommonBookEntitiesByUserIsNull();
-    }
-
-    @Override
     public Optional<BookEntity> getBookById(final String id) {
         return bookRepository.findById(id);
     }
 
     @Override
     public void updateBook(final BookEntity book) {
-        bookRepository.save(book);
-    }
-
-    @Override
-    public void removeUser(final BookEntity book) {
-
-        final UserEntity userEntity = book.getUser();
-
-        book.setUser(null);
-
-        userEntity.getBooks().remove(book);
-
-        userRepository.save(userEntity);
         bookRepository.save(book);
     }
 }

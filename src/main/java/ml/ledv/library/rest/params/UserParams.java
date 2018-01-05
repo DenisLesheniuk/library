@@ -3,6 +3,7 @@ package ml.ledv.library.rest.params;
 public class UserParams {
 
     private String id;
+
     private String login;
 
     public UserParams() {

@@ -68,12 +68,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     //Dependencies for using MySQL
-  /*   compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
-     runtime('mysql:mysql-connector-java:5.1.6')*/
+    /*compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
+    runtime('mysql:mysql-connector-java:5.1.6')*/
 
     //Dependencies for using MongoDB
     compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
-    compile group: 'org.hibernate.ogm', name: 'hibernate-ogm-core', version: '5.1.0.Final'
+    compile group: 'org.hibernate.ogm', name: 'hibernate-ogm-core', version: '5.2.0.Beta1'
 
     compile("org.springframework.boot:spring-boot-starter-web:2.0.0.M7")
     compile("org.springframework.boot:spring-boot-starter-web-services:1.4.7.RELEASE")
@@ -81,4 +81,8 @@ dependencies {
     compile("wsdl4j:wsdl4j:1.6.1")
     jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
+
+    testCompile('org.springframework.boot:spring-boot-starter-test:2.0.0.M4')
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testCompile group: 'com.h2database', name: 'h2', version: '1.4.196'
 }

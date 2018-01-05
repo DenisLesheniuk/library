@@ -13,11 +13,7 @@ public interface BookService {
 
     List<BookEntity> getAll();
 
-    List<BookEntity> getAllFree();
-
     Optional<BookEntity> getBookById(String id);
 
     void updateBook(BookEntity book);
-
-    void removeUser(BookEntity book);
 }

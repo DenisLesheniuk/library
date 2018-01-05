@@ -1,6 +1,5 @@
 package ml.ledv.library.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,10 +14,6 @@ public class BookEntity {
     private String id;
 
     private String name;
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER)
-    private UserEntity user;
 
     public BookEntity() {
     }
@@ -39,20 +34,11 @@ public class BookEntity {
         this.name = name;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(final UserEntity user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
         return "BookEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", user=" + user +
                 '}';
     }
 
@@ -62,13 +48,12 @@ public class BookEntity {
         if (o == null || getClass() != o.getClass()) return false;
         BookEntity that = (BookEntity) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(user, that.user);
+                Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, user);
+        return Objects.hash(id, name);
     }
 }

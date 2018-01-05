@@ -8,6 +8,7 @@ import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -53,7 +54,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "3": {
-                    returnBook();
+                    cancelBookReservation();
                     break;
                 }
                 case "4": {
@@ -114,9 +115,10 @@ public class CLIImpl implements CLI {
         System.out.println("Deleted book - " + bookId);
     }
 
-    private void returnBook() {
+    private void cancelBookReservation() {
 
         String bookId = null;
+        String userId = null;
 
         while (bookId == null) {
             System.out.println("Enter book id: ");
@@ -129,9 +131,20 @@ public class CLIImpl implements CLI {
             System.out.println("Book with id " + bookId + " is not exist!");
             return;
         } else {
-            bookService.removeUser(bookOptional.get());
-        }
 
+            while (userId == null) {
+                System.out.println("Enter user id: ");
+                bookId = scanner.nextLine();
+            }
+
+            final Optional<UserEntity> userOptional = userService.getUserById(userId);
+            if (!userOptional.isPresent()) {
+                System.out.println("User with id " + userId + " is not exist!");
+                return;
+            } else {
+                userService.removeBook(userOptional.get(), bookOptional.get());
+            }
+        }
         System.out.println("BookDocument is returned - " + bookId);
     }
 
@@ -142,22 +155,24 @@ public class CLIImpl implements CLI {
             System.out.println("******************************************************");
             System.out.println("Id:        " + book.getId());
             System.out.println("Book name: " + book.getName());
-            if (book.getUser() != null) {
-                System.out.println("User:      " + "id    " + book.getUser().getId());
-                System.out.println("           login " + book.getUser().getLogin());
-            }
             System.out.println("******************************************************");
         }
     }
 
     private void showAllFree() {
 
-        for (BookEntity book : bookService.getAllFree()) {
-            System.out.println();
-            System.out.println("******************************************************");
-            System.out.println("Id:        " + book.getId());
-            System.out.println("Book name: " + book.getName());
-            System.out.println("******************************************************");
+        final List<BookEntity> bookEntities = bookService.getAll();
+        Optional<UserEntity> userOptional = null;
+
+        for (BookEntity book : bookEntities) {
+            userOptional = userService.getUserByBook(book);
+            if (!userOptional.isPresent()) {
+                System.out.println();
+                System.out.println("******************************************************");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("******************************************************");
+            }
         }
     }
 
@@ -186,8 +201,8 @@ public class CLIImpl implements CLI {
 
             final BookEntity book = bookOptional.get();
 
-            if (book.getUser() != null) {
-                System.out.println("Book " + book.getName() + " is reserved by " + book.getUser().getId());
+            if (userService.getUserByBook(book).isPresent()) {
+                System.out.println("Book " + book.getName() + " is already reserved.");
                 return;
             } else {
 
@@ -200,10 +215,7 @@ public class CLIImpl implements CLI {
 
                     final UserEntity user = userOptional.get();
 
-                    book.setUser(user);
                     user.getBooks().add(book);
-
-                    bookService.updateBook(book);
                     userService.updateUser(user);
                 }
             }

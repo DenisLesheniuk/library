@@ -135,13 +135,13 @@ public class BookLibraryWSEndpoint {
 
             final BookInfo bookInfo = new BookInfo();
 
-            if (bookEntity.getUser() != null) {
+         /*   if (bookEntity.getUser() != null) {
 
                 final UserInfo userInfo = new UserInfo();
 
                 BeanUtils.copyProperties(bookEntity.getUser(), userInfo);
                 bookInfo.setUserEntity(userInfo);
-            }
+            }*/
 
             bookInfo.setId(bookEntity.getId());
             bookInfo.setName(bookEntity.getName());
@@ -251,7 +251,7 @@ public class BookLibraryWSEndpoint {
                 final UserEntity userEntity = userOptional.get();
                 final BookEntity bookEntity = bookOptional.get();
 
-                if (bookEntity.getUser() != null) {
+              /*  if (bookEntity.getUser() != null) {
 
                     status.setStatusCode("BAD_REQUEST");
                     status.setMessage("Book with id " + bookId + " already reserved");
@@ -269,12 +269,12 @@ public class BookLibraryWSEndpoint {
                     status.setStatusCode("SUCCESS");
                     status.setMessage("Book with id " + bookId + " reserved by User with id " + userId);
 
-                    response.setServiceStatus(status);
+                    response.setServiceStatus(status);*/
 
                     return response;
                 }
             }
-        }
+        //}
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookReservationRequest")
@@ -305,12 +305,12 @@ public class BookLibraryWSEndpoint {
             } else {
 
                 final BookEntity bookEntity = bookOptional.get();
-                final UserEntity userEntity = bookEntity.getUser();
+                //final UserEntity userEntity = bookEntity.getUser();
 
-                userEntity.getBooks().remove(bookEntity);
-                bookEntity.setUser(null);
+               // userEntity.getBooks().remove(bookEntity);
+               // bookEntity.setUser(null);
 
-                userService.updateUser(userEntity);
+                //userService.updateUser(userEntity);
                 bookService.updateBook(bookEntity);
 
                 status.setStatusCode("SUCCESS");
@@ -329,10 +329,10 @@ public class BookLibraryWSEndpoint {
 
         final GetFreeBooksResponse response = new GetFreeBooksResponse();
 
-        final List<BookEntity> bookEntities = bookService.getAllFree();
+        //final List<BookEntity> bookEntities = bookService.getAllFree();
         final List<BookInfo> booksInfo = new ArrayList<>();
 
-        for (BookEntity bookEntity : bookEntities) {
+        /*for (BookEntity bookEntity : bookEntities) {
 
             final BookInfo bookInfo = new BookInfo();
 
@@ -349,7 +349,7 @@ public class BookLibraryWSEndpoint {
 
             booksInfo.add(bookInfo);
 
-        }
+        }*/
         response.getBooks().addAll(booksInfo);
 
         return response;

@@ -16,7 +16,8 @@ public class UserEntity {
 
     private String login;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+
+    @OneToMany(fetch = FetchType.LAZY)
     private List<BookEntity> books;
 
     public UserEntity() {
