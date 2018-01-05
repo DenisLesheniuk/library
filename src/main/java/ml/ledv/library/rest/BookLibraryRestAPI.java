@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -112,6 +114,22 @@ public class BookLibraryRestAPI {
         return ResponseEntity.ok(bookService.getAll());
     }
 
+    @GetMapping("/books/free")
+    public ResponseEntity<?> getBooksFree(){
+
+        final List<BookEntity> books = bookService.getAll();
+        final List<BookEntity> freeBooks = new ArrayList<>();
+
+
+        for(BookEntity book: books){
+            if(!userService.getUserByBook(book).isPresent()){
+                freeBooks.add(book);
+            }
+        }
+
+        return ResponseEntity.ok(freeBooks);
+    }
+
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable final String id) {
 
@@ -126,25 +144,27 @@ public class BookLibraryRestAPI {
     }
 
     @PutMapping("/books/{id}")
-    public ResponseEntity<?> cancelBookReservation(@PathVariable final String id) {
+    public ResponseEntity<?> cancelBookReservation(@PathVariable final String id, @RequestBody final UserParams userParams) {
 
-        final Optional<BookEntity> bookOptional = bookService.getBookById(id);
-
-        if (!bookOptional.isPresent()) {
-            return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + id));
+        final String userId = userParams.getId();
+        if (userId == null) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("Empty field id. "));
         } else {
+            final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
-            final BookEntity bookEntity = bookOptional.get();
-           // final UserEntity userEntity = bookEntity.getUser();
+            if (!bookOptional.isPresent()) {
+                return ResponseEntity.badRequest().body(new ErrorResponse("Not found book with id. " + id));
+            } else {
 
-            //bookEntity.setUser(null);
+                final Optional<UserEntity> userOptional = userService.getUserById(userId);
 
-           // userEntity.getBooks().remove(bookEntity);
-
-            bookService.updateBook(bookEntity);
-           // userService.updateUser(userEntity);
-
-            return ResponseEntity.ok().build();
+                if (!userOptional.isPresent()) {
+                    return ResponseEntity.badRequest().body(new ErrorResponse("Not found user with id. " + userId));
+                } else {
+                    userService.removeBook(userOptional.get(), bookOptional.get());
+                    return ResponseEntity.ok().build();
+                }
+            }
         }
     }
 }

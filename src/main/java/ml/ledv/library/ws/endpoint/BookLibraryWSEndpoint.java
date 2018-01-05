@@ -135,14 +135,6 @@ public class BookLibraryWSEndpoint {
 
             final BookInfo bookInfo = new BookInfo();
 
-         /*   if (bookEntity.getUser() != null) {
-
-                final UserInfo userInfo = new UserInfo();
-
-                BeanUtils.copyProperties(bookEntity.getUser(), userInfo);
-                bookInfo.setUserEntity(userInfo);
-            }*/
-
             bookInfo.setId(bookEntity.getId());
             bookInfo.setName(bookEntity.getName());
 
@@ -251,7 +243,7 @@ public class BookLibraryWSEndpoint {
                 final UserEntity userEntity = userOptional.get();
                 final BookEntity bookEntity = bookOptional.get();
 
-              /*  if (bookEntity.getUser() != null) {
+                if (userService.getUserByBook(bookEntity).isPresent()) {
 
                     status.setStatusCode("BAD_REQUEST");
                     status.setMessage("Book with id " + bookId + " already reserved");
@@ -260,21 +252,20 @@ public class BookLibraryWSEndpoint {
 
                     return response;
                 } else {
-                    bookEntity.setUser(userEntity);
                     userEntity.getBooks().add(bookEntity);
 
                     userService.updateUser(userEntity);
-                    bookService.updateBook(bookEntity);
+
 
                     status.setStatusCode("SUCCESS");
                     status.setMessage("Book with id " + bookId + " reserved by User with id " + userId);
 
-                    response.setServiceStatus(status);*/
+                    response.setServiceStatus(status);
 
                     return response;
                 }
             }
-        //}
+        }
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "cancelBookReservationRequest")
@@ -283,42 +274,61 @@ public class BookLibraryWSEndpoint {
 
         final CancelBookReservationResponse response = new CancelBookReservationResponse();
         final ServiceStatus status = new ServiceStatus();
-        final String id = request.getId();
+        final String userId = request.getUserId();
 
-        if (id.length() == 0) {
+        if (userId.length() == 0) {
             status.setStatusCode("BAD_REQUEST");
-            status.setMessage("Empty tag 'id'. ");
+            status.setMessage("Empty tag 'userId'. ");
 
             response.setServiceStatus(status);
 
             return response;
         } else {
-            final Optional<BookEntity> bookOptional = bookService.getBookById(id);
 
-            if (!bookOptional.isPresent()) {
-                status.setStatusCode("NOT_FOUND");
-                status.setMessage("Book with id " + id + " does not exist.");
+            final String bookId = request.getBookId();
+
+            if (bookId.length() == 0) {
+                status.setStatusCode("BAD_REQUEST");
+                status.setMessage("Empty tag 'bookId'. ");
 
                 response.setServiceStatus(status);
 
                 return response;
             } else {
+                final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
-                final BookEntity bookEntity = bookOptional.get();
-                //final UserEntity userEntity = bookEntity.getUser();
+                if (!bookOptional.isPresent()) {
+                    status.setStatusCode("NOT_FOUND");
+                    status.setMessage("Book with id " + bookId + " does not exist.");
 
-               // userEntity.getBooks().remove(bookEntity);
-               // bookEntity.setUser(null);
+                    response.setServiceStatus(status);
 
-                //userService.updateUser(userEntity);
-                bookService.updateBook(bookEntity);
+                    return response;
+                } else {
 
-                status.setStatusCode("SUCCESS");
-                status.setMessage("Canceled reservation for book with id " + id);
+                    final Optional<UserEntity> userOptional = userService.getUserById(userId);
 
-                response.setServiceStatus(status);
+                    if (!userOptional.isPresent()) {
+                        status.setStatusCode("NOT_FOUND");
+                        status.setMessage("User with id " + userId + " does not exist.");
 
-                return response;
+                        response.setServiceStatus(status);
+
+                        return response;
+                    } else {
+                        final BookEntity bookEntity = bookOptional.get();
+                        final UserEntity userEntity = userOptional.get();
+
+                        userService.removeBook(userEntity, bookEntity);
+
+                        status.setStatusCode("SUCCESS");
+                        status.setMessage("Canceled reservation for book with id " + bookId);
+
+                        response.setServiceStatus(status);
+
+                        return response;
+                    }
+                }
             }
         }
     }
@@ -329,28 +339,23 @@ public class BookLibraryWSEndpoint {
 
         final GetFreeBooksResponse response = new GetFreeBooksResponse();
 
-        //final List<BookEntity> bookEntities = bookService.getAllFree();
-        final List<BookInfo> booksInfo = new ArrayList<>();
+        final List<BookEntity> books = bookService.getAll();
 
-        /*for (BookEntity bookEntity : bookEntities) {
+        final List<BookInfo> freeBooksInfo = new ArrayList<>();
 
-            final BookInfo bookInfo = new BookInfo();
+        for (BookEntity book : books) {
 
-            if (bookEntity.getUser() != null) {
+            if (!userService.getUserByBook(book).isPresent()) {
 
-                final UserInfo userInfo = new UserInfo();
+                final BookInfo freeBook = new BookInfo();
 
-                BeanUtils.copyProperties(bookEntity.getUser(), userInfo);
-                bookInfo.setUserEntity(userInfo);
+                freeBook.setId(book.getId());
+                freeBook.setName(book.getName());
+
+                freeBooksInfo.add(freeBook);
             }
-
-            bookInfo.setId(bookEntity.getId());
-            bookInfo.setName(bookEntity.getName());
-
-            booksInfo.add(bookInfo);
-
-        }*/
-        response.getBooks().addAll(booksInfo);
+        }
+        response.getBooks().addAll(freeBooksInfo);
 
         return response;
     }

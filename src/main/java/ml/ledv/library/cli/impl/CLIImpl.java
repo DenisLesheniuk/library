@@ -134,7 +134,7 @@ public class CLIImpl implements CLI {
 
             while (userId == null) {
                 System.out.println("Enter user id: ");
-                bookId = scanner.nextLine();
+                userId = scanner.nextLine();
             }
 
             final Optional<UserEntity> userOptional = userService.getUserById(userId);
