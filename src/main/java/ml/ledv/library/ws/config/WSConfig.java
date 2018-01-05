@@ -38,5 +38,4 @@ public class WSConfig extends WsConfigurerAdapter {
     public XsdSchema usersSchema() {
         return new SimpleXsdSchema(new ClassPathResource("booklibrary.xsd"));
     }
-
 }

@@ -37,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(final UserEntity user) {
-
         userRepository.delete(user);
     }
 
@@ -58,14 +57,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addBook(final UserEntity user, final BookEntity book) {
-
         user.getBooks().add(book);
         userRepository.save(user);
     }
 
     @Override
     public void removeBook(final UserEntity user, final BookEntity book) {
-
         user.getBooks().remove(book);
         userRepository.save(user);
     }
