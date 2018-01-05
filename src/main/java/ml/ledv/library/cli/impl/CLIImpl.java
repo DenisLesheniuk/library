@@ -1,21 +1,36 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
-import ml.ledv.library.db.service.BookLibraryService;
+import ml.ledv.library.db.entity.BookEntity;
+import ml.ledv.library.db.entity.UserEntity;
+import ml.ledv.library.db.service.BookService;
+import ml.ledv.library.db.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
+@Service
 public class CLIImpl implements CLI {
 
-    private BookLibraryService bookLibraryService;
+    private UserService userService;
+    private BookService bookService;
 
-    public CLIImpl(final BookLibraryService bookLibraryService) {
-        this.bookLibraryService = bookLibraryService;
+    private Scanner scanner;
+
+    @Autowired
+    public CLIImpl(final UserService userService, final BookService bookService) {
+        this.userService = userService;
+        this.bookService = bookService;
+        scanner = new Scanner(System.in);
     }
 
     @Override
     public void start() {
-        System.out.println(bookLibraryService);
+
+        String choice;
 
         while (true) {
 
@@ -25,10 +40,9 @@ public class CLIImpl implements CLI {
             System.out.println("4. Show all.");
             System.out.println("5. Show all free.");
             System.out.println("6. Reserve book.");
-            System.out.println("7. UserDocument service.");
+            System.out.println("7. User service.");
 
-            final Scanner scanner = new Scanner(System.in);
-            final String choice = scanner.nextLine();
+            choice = scanner.nextLine();
 
             switch (choice) {
                 case "1": {
@@ -40,7 +54,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "3": {
-                    returnBook();
+                    cancelBookReservation();
                     break;
                 }
                 case "4": {
@@ -72,12 +86,10 @@ public class CLIImpl implements CLI {
 
         while (bookName == null) {
             System.out.println("Enter book name: ");
-
-            final Scanner scanner = new Scanner(System.in);
             bookName = scanner.nextLine();
         }
 
-        bookLibraryService.createBook(bookName);
+        bookService.createBook(bookName);
 
         System.out.println("Created book - " + bookName);
     }
@@ -88,38 +100,80 @@ public class CLIImpl implements CLI {
 
         while (bookId == null) {
             System.out.println("Enter book name: ");
-
-            final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
         }
 
-        bookLibraryService.deleteBook(bookId);
+        final Optional<BookEntity> optionalBookEntity = bookService.getBookById(bookId);
+
+        if (!optionalBookEntity.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist!");
+            return;
+        } else {
+            bookService.deleteBook(optionalBookEntity.get());
+        }
 
         System.out.println("Deleted book - " + bookId);
     }
 
-    private void returnBook() {
+    private void cancelBookReservation() {
 
         String bookId = null;
+        String userId = null;
 
         while (bookId == null) {
             System.out.println("Enter book id: ");
-
-            final Scanner scanner = new Scanner(System.in);
             bookId = scanner.nextLine();
         }
 
-        bookLibraryService.cancelReservation(bookId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
+        if (!bookOptional.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist!");
+            return;
+        } else {
+
+            while (userId == null) {
+                System.out.println("Enter user id: ");
+                userId = scanner.nextLine();
+            }
+
+            final Optional<UserEntity> userOptional = userService.getUserById(userId);
+            if (!userOptional.isPresent()) {
+                System.out.println("User with id " + userId + " is not exist!");
+                return;
+            } else {
+                userService.removeBook(userOptional.get(), bookOptional.get());
+            }
+        }
         System.out.println("BookDocument is returned - " + bookId);
     }
 
     private void showAll() {
-      bookLibraryService.showBooks();
+
+        for (BookEntity book : bookService.getAll()) {
+            System.out.println();
+            System.out.println("******************************************************");
+            System.out.println("Id:        " + book.getId());
+            System.out.println("Book name: " + book.getName());
+            System.out.println("******************************************************");
+        }
     }
 
     private void showAllFree() {
-      bookLibraryService.showFreeBook();
+
+        final List<BookEntity> bookEntities = bookService.getAll();
+        Optional<UserEntity> userOptional = null;
+
+        for (BookEntity book : bookEntities) {
+            userOptional = userService.getUserByBook(book);
+            if (!userOptional.isPresent()) {
+                System.out.println();
+                System.out.println("******************************************************");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("******************************************************");
+            }
+        }
     }
 
     private void reserveBook() {
@@ -128,35 +182,62 @@ public class CLIImpl implements CLI {
         String userId = null;
 
         while (bookId == null) {
-            System.out.println("Enter book id: ");
 
-            final Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter book id: ");
             bookId = scanner.nextLine();
         }
         while (userId == null) {
-            System.out.println("Enter user id: ");
 
-            final Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter user id: ");
             userId = scanner.nextLine();
         }
 
-        bookLibraryService.reserveBook(bookId, userId);
+        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
+
+        if (!bookOptional.isPresent()) {
+            System.out.println("Book with id " + bookId + " is not exist! ");
+            return;
+        } else {
+
+            final BookEntity book = bookOptional.get();
+
+            if (userService.getUserByBook(book).isPresent()) {
+                System.out.println("Book " + book.getName() + " is already reserved.");
+                return;
+            } else {
+
+                final Optional<UserEntity> userOptional = userService.getUserById(userId);
+
+                if (!userOptional.isPresent()) {
+                    System.out.println("User with id " + userId + " is not exist! ");
+                    return;
+                } else {
+
+                    final UserEntity user = userOptional.get();
+
+                    user.getBooks().add(book);
+                    userService.updateUser(user);
+                }
+            }
+        }
 
         System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId);
     }
 
     private void userServiceMenu() {
+
+        String choice;
+
         while (true) {
 
             System.out.println("UserDocument service menu.");
-
-            System.out.println("1. Create UserDocument");
-            System.out.println("2. Delete UserDocument");
+            System.out.println("1. Create User");
+            System.out.println("2. Delete User");
             System.out.println("3. Show all.");
             System.out.println("4. Back.");
 
-            final Scanner scanner = new Scanner(System.in);
-            final String choice = scanner.nextLine();
+            choice = scanner.nextLine();
+
             switch (choice) {
                 case "1": {
                     addUserMenu();
@@ -186,12 +267,10 @@ public class CLIImpl implements CLI {
 
         while (userLogin == null) {
             System.out.println("Enter user login: ");
-
-            final Scanner scanner = new Scanner(System.in);
             userLogin = scanner.nextLine();
         }
 
-        bookLibraryService.createUser(userLogin);
+        userService.createUser(userLogin);
 
         System.out.println("Created user - " + userLogin);
     }
@@ -201,18 +280,39 @@ public class CLIImpl implements CLI {
         String userId = null;
 
         while (userId == null) {
-            System.out.println("Enter user id: ");
 
-            final Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter user id: ");
             userId = scanner.nextLine();
         }
 
-        bookLibraryService.deleteUser(userId);
+        final Optional<UserEntity> userOptional = userService.getUserById(userId);
+
+        if (!userOptional.isPresent()) {
+            System.out.println("User with id " + userId + " is not exist!");
+            return;
+        } else {
+            userService.deleteUser(userOptional.get());
+        }
 
         System.out.println("Deleted user - " + userId);
     }
 
     private void showUsers() {
-        bookLibraryService.showUsers();
+
+        for (UserEntity user : userService.getAll()) {
+            System.out.println();
+            System.out.println("******************************************************");
+            System.out.println("Id:           " + user.getId());
+            System.out.println("User's login: " + user.getLogin());
+            System.out.println("Books:        ");
+            for (BookEntity book : user.getBooks()) {
+                System.out.println();
+                System.out.println("-----------------------*********-----------------------");
+                System.out.println("Id:        " + book.getId());
+                System.out.println("Book name: " + book.getName());
+                System.out.println("-------------------------------------------------------");
+            }
+            System.out.println("******************************************************");
+        }
     }
 }
