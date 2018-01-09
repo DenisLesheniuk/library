@@ -151,11 +151,7 @@ public class CLIImpl implements CLI {
     private void showAll() {
 
         for (BookEntity book : bookService.getAll()) {
-            System.out.println();
-            System.out.println("******************************************************");
-            System.out.println("Id:        " + book.getId());
-            System.out.println("Book name: " + book.getName());
-            System.out.println("******************************************************");
+            printBooks(book);
         }
     }
 
@@ -167,11 +163,7 @@ public class CLIImpl implements CLI {
         for (BookEntity book : bookEntities) {
             userOptional = userService.getUserByBook(book);
             if (!userOptional.isPresent()) {
-                System.out.println();
-                System.out.println("******************************************************");
-                System.out.println("Id:        " + book.getId());
-                System.out.println("Book name: " + book.getName());
-                System.out.println("******************************************************");
+                printBooks(book);
             }
         }
     }
@@ -314,5 +306,13 @@ public class CLIImpl implements CLI {
             }
             System.out.println("******************************************************");
         }
+    }
+
+    private void printBooks(final BookEntity book) {
+        System.out.println();
+        System.out.println("******************************************************");
+        System.out.println("Id:        " + book.getId());
+        System.out.println("Book name: " + book.getName());
+        System.out.println("******************************************************");
     }
 }
