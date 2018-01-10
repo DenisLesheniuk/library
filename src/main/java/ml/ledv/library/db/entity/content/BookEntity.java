@@ -1,6 +1,8 @@
 package ml.ledv.library.db.entity.content;
 
 import ml.ledv.library.db.entity.AuthorEntity;
+import ml.ledv.library.db.entity.ContentEntity;
+import ml.ledv.library.db.entity.PublisherEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -29,6 +31,10 @@ public class BookEntity extends LibraryContent {
     @ManyToOne
     @JoinColumn(name = "contentId")
     private ContentEntity content;
+
+    @ManyToOne
+    @JoinColumn (name = "publisherId")
+    private PublisherEntity publisher;
 
     public BookEntity() {
     }
@@ -79,5 +85,14 @@ public class BookEntity extends LibraryContent {
 
     public void setContent(final ContentEntity content) {
         this.content = content;
+    }
+
+    public PublisherEntity getPublisher() {
+
+        return publisher;
+    }
+
+    public void setPublisher(final PublisherEntity publisher) {
+        this.publisher = publisher;
     }
 }

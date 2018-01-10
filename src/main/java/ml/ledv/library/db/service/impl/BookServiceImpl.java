@@ -3,6 +3,7 @@ package ml.ledv.library.db.service.impl;
 import ml.ledv.library.db.entity.content.BookEntity;
 import ml.ledv.library.db.repository.BookRepository;
 import ml.ledv.library.db.service.BookService;
+import ml.ledv.library.db.utils.LibraryContentCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +15,18 @@ public class BookServiceImpl implements BookService {
 
     private BookRepository bookRepository;
 
+    private LibraryContentCreator bookCreator;
+
     @Autowired
-    public BookServiceImpl(final BookRepository bookRepository) {
+    public BookServiceImpl(final BookRepository bookRepository, final LibraryContentCreator bookCreator) {
         this.bookRepository = bookRepository;
+        this.bookCreator = bookCreator;
     }
 
     @Override
     public void createBook(final String name) {
 
-        final BookEntity bookEntity = new BookEntity();
+        final BookEntity bookEntity = (BookEntity) bookCreator.createContent();
         bookEntity.setName(name);
 
         bookRepository.save(bookEntity);

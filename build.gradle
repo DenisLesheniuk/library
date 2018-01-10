@@ -68,12 +68,12 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     //Dependencies for using MySQL
-    /*compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
-    runtime('mysql:mysql-connector-java:5.1.6')*/
+    compile('org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M7')
+    runtime('mysql:mysql-connector-java:5.1.6')
 
     //Dependencies for using MongoDB
-    compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
-    compile group: 'org.hibernate.ogm', name: 'hibernate-ogm-core', version: '5.2.0.Beta1'
+   /* compile("org.springframework.boot:spring-boot-starter-data-mongodb:2.0.0.M7")
+    compile group: 'org.hibernate.ogm', name: 'hibernate-ogm-core', version: '5.2.0.Beta1'*/
 
     compile("org.springframework.boot:spring-boot-starter-web:2.0.0.M7")
     compile("org.springframework.boot:spring-boot-starter-web-services:1.4.7.RELEASE")
