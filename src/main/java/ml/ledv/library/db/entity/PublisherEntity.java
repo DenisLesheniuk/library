@@ -1,19 +1,10 @@
 package ml.ledv.library.db.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity(name = "PUBLISHER")
-public class PublisherEntity {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class PublisherEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -21,12 +12,8 @@ public class PublisherEntity {
     public PublisherEntity() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
+    public PublisherEntity(final String id) {
+        super(id);
     }
 
     public String getName() {
@@ -35,5 +22,12 @@ public class PublisherEntity {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "PublisherEntity{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

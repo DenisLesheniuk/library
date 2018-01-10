@@ -1,19 +1,14 @@
 package ml.ledv.library.db.entity.content;
 
 import ml.ledv.library.db.entity.AuthorEntity;
+import ml.ledv.library.db.entity.BaseEntity;
 import ml.ledv.library.db.entity.ContentEntity;
 import ml.ledv.library.db.entity.PublisherEntity;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity(name = "BOOK")
-public class BookEntity extends LibraryContent {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class BookEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -39,12 +34,8 @@ public class BookEntity extends LibraryContent {
     public BookEntity() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
+    public BookEntity(String id) {
+        super(id);
     }
 
     public String getName() {
@@ -94,5 +85,17 @@ public class BookEntity extends LibraryContent {
 
     public void setPublisher(final PublisherEntity publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "BookEntity{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", author=" + author +
+                ", content=" + content +
+                ", publisher=" + publisher +
+                '}';
     }
 }

@@ -1,15 +1,14 @@
 package ml.ledv.library.db.utils.impl;
 
 import ml.ledv.library.db.entity.BaseEntity;
-import ml.ledv.library.db.entity.content.BookEntity;
+import ml.ledv.library.db.entity.ContentEntity;
 import ml.ledv.library.db.utils.EntityCreator;
 import org.springframework.stereotype.Service;
 
-@Service("bookCreator")
-public class BookCreator implements EntityCreator {
-
+@Service("contentCreator")
+public class ContentCreator implements EntityCreator {
     @Override
     public BaseEntity createEntity() {
-        return new BookEntity();
+        return new ContentEntity();
     }
 }

@@ -1,18 +1,13 @@
 package ml.ledv.library.db.entity.content;
 
+import ml.ledv.library.db.entity.BaseEntity;
 import ml.ledv.library.db.entity.PublisherEntity;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "NEWSPAPER")
-public class NewsPaperEntity extends LibraryContent {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class NewsPaperEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -28,12 +23,8 @@ public class NewsPaperEntity extends LibraryContent {
     public NewsPaperEntity() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
+    public NewsPaperEntity(final String id) {
+        super(id);
     }
 
     public String getName() {
@@ -58,5 +49,14 @@ public class NewsPaperEntity extends LibraryContent {
 
     public void setPublisher(final PublisherEntity publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "NewsPaperEntity{" +
+                "name='" + name + '\'' +
+                ", date=" + date +
+                ", publisher=" + publisher +
+                '}';
     }
 }

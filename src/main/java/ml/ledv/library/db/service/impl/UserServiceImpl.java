@@ -4,6 +4,7 @@ import ml.ledv.library.db.entity.content.BookEntity;
 import ml.ledv.library.db.entity.UserEntity;
 import ml.ledv.library.db.repository.UserRepository;
 import ml.ledv.library.db.service.UserService;
+import ml.ledv.library.db.utils.EntityCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,18 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    private EntityCreator userCreator;
+
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository) {
+    public UserServiceImpl(final UserRepository userRepository, final EntityCreator userCreator) {
         this.userRepository = userRepository;
+        this.userCreator = userCreator;
     }
 
     @Override
     public void createUser(final String login) {
 
-        final UserEntity userEntity = new UserEntity();
+        final UserEntity userEntity = (UserEntity) userCreator.createEntity();
         userEntity.setLogin(login);
         userEntity.setBooks(new ArrayList<>());
 

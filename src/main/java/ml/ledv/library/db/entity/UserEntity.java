@@ -1,22 +1,15 @@
 package ml.ledv.library.db.entity;
 
 import ml.ledv.library.db.entity.content.BookEntity;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "USER")
-public class UserEntity {
+public class UserEntity extends BaseEntity {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
-
+    @Column(name = "name")
     private String login;
-
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<BookEntity> books;
@@ -24,12 +17,8 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(final String id) {
-        this.id = id;
+    public UserEntity(final String id) {
+        super(id);
     }
 
     public String getLogin() {
@@ -49,18 +38,10 @@ public class UserEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(login, that.login) &&
-                Objects.equals(books, that.books);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, login, books);
+    public String toString() {
+        return "UserEntity{" +
+                "login='" + login + '\'' +
+                ", books=" + books +
+                '}';
     }
 }

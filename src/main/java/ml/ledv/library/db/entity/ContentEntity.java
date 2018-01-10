@@ -1,24 +1,19 @@
 package ml.ledv.library.db.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity(name = "CONTENT")
-public class ContentEntity {
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+public class ContentEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
 
     public ContentEntity() {
+    }
+
+    public ContentEntity(final String id) {
+        super(id);
     }
 
     public String getName() {
@@ -29,12 +24,10 @@ public class ContentEntity {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "ContentEntity{" +
+                "name='" + name + '\'' +
+                '}';
     }
-
-    public void setId(final String id) {
-        this.id = id;
-    }
-
 }
