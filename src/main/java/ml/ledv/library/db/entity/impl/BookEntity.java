@@ -1,8 +1,6 @@
 package ml.ledv.library.db.entity.impl;
 
 import ml.ledv.library.db.entity.BaseEntity;
-import ml.ledv.library.db.entity.ContentEntity;
-import ml.ledv.library.db.entity.PublisherEntity;
 
 import javax.persistence.*;
 
