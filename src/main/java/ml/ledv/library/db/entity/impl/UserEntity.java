@@ -1,6 +1,6 @@
-package ml.ledv.library.db.entity;
+package ml.ledv.library.db.entity.impl;
 
-import ml.ledv.library.db.entity.content.BookEntity;
+import ml.ledv.library.db.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,7 +1,7 @@
 package ml.ledv.library.db.utils.impl;
 
 import ml.ledv.library.db.entity.BaseEntity;
-import ml.ledv.library.db.entity.content.NewsPaperEntity;
+import ml.ledv.library.db.entity.impl.NewsPaperEntity;
 import ml.ledv.library.db.utils.EntityCreator;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package ml.ledv.library.db.service;
 
-import ml.ledv.library.db.entity.content.BookEntity;
+import ml.ledv.library.db.entity.impl.BookEntity;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
 package ml.ledv.library.rest;
 
-import ml.ledv.library.db.entity.content.BookEntity;
-import ml.ledv.library.db.entity.UserEntity;
+import ml.ledv.library.db.entity.impl.BookEntity;
+import ml.ledv.library.db.entity.impl.UserEntity;
 import ml.ledv.library.db.service.BookService;
 import ml.ledv.library.db.service.UserService;
 import ml.ledv.library.rest.params.BookParam;
