@@ -1,6 +1,6 @@
 package ml.ledv.library.db.service.impl;
 
-import ml.ledv.library.db.entity.BookEntity;
+import ml.ledv.library.db.entity.content.BookEntity;
 import ml.ledv.library.db.entity.UserEntity;
 import ml.ledv.library.db.repository.UserRepository;
 import ml.ledv.library.db.service.UserService;

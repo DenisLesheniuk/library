@@ -1,12 +1,13 @@
 package ml.ledv.library.db.entity;
 
+import ml.ledv.library.db.entity.content.BookEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name = "user")
+@Entity(name = "USER")
 public class UserEntity {
 
     @Id
