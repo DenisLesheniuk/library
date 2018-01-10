@@ -3,6 +3,7 @@ package ml.ledv.library.cli.utils;
 import ml.ledv.library.cli.utils.task.Task;
 
 import ml.ledv.library.cli.utils.task.impl.AddBookTask;
+import ml.ledv.library.cli.utils.task.impl.DeleteBookTask;
 import ml.ledv.library.db.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class TaskHandler {
     public void addBook() {
         task = new AddBookTask(bookService);
         stack.push(task.execute());
+    }
+
+    public void deleteBook(){
+        task = new DeleteBookTask(bookService);
+        final Task deleteTask = task.execute();
+        if(deleteTask != null){
+            stack.push(deleteTask);
+        }else return;
     }
 
     public void undo(){

@@ -17,7 +17,6 @@ public class AddBookTask implements Task {
 
     private BookEntity bookEntity;
 
-
     @Autowired
     public AddBookTask(final BookService bookService) {
         this.bookService = bookService;
@@ -46,5 +45,4 @@ public class AddBookTask implements Task {
         bookService.deleteBook(bookEntity);
         System.out.println(".... book " + bookEntity.getName() + " is deleted.");
     }
-
 }

@@ -59,7 +59,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "2": {
-                    deleteBook();
+                    taskHandler.deleteBook();
                     break;
                 }
                 case "3": {
@@ -95,23 +95,7 @@ public class CLIImpl implements CLI {
 
     private void deleteBook() {
 
-        String bookId = null;
 
-        while (bookId == null) {
-            System.out.println("Enter book name: ");
-            bookId = scanner.nextLine();
-        }
-
-        final Optional<BookEntity> optionalBookEntity = bookService.getBookById(bookId);
-
-        if (!optionalBookEntity.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist!");
-            return;
-        } else {
-            bookService.deleteBook(optionalBookEntity.get());
-        }
-
-        System.out.println("Deleted book - " + bookId);
     }
 
     private void cancelBookReservation() {

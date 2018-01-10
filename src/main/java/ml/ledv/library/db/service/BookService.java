@@ -15,5 +15,6 @@ public interface BookService {
 
     Optional<BookEntity> getBookById(String id);
 
-    void updateBook(BookEntity book);
+    BookEntity saveBook(BookEntity book);
+
 }
