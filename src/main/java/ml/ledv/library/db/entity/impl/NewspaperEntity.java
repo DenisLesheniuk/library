@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity(name = "NEWSPAPER")
-public class NewsPaperEntity extends BaseEntity {
+public class NewspaperEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -19,10 +19,10 @@ public class NewsPaperEntity extends BaseEntity {
     @JoinColumn(name = "publisherId")
     private PublisherEntity publisher;
 
-    public NewsPaperEntity() {
+    public NewspaperEntity() {
     }
 
-    public NewsPaperEntity(final String id) {
+    public NewspaperEntity(final String id) {
         super(id);
     }
 
@@ -52,7 +52,7 @@ public class NewsPaperEntity extends BaseEntity {
 
     @Override
     public String toString() {
-        return "NewsPaperEntity{" +
+        return "NewspaperEntity{" +
                 "name='" + name + '\'' +
                 ", date=" + date +
                 ", publisher=" + publisher +
