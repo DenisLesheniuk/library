@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BookService {
 
-    void createBook(String name);
+    BookEntity createBook(String name);
 
     void deleteBook(BookEntity book);
 

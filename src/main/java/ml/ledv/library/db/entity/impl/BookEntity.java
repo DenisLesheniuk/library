@@ -25,13 +25,13 @@ public class BookEntity extends BaseEntity {
     private ContentEntity content;
 
     @ManyToOne
-    @JoinColumn (name = "publisherId")
+    @JoinColumn(name = "publisherId")
     private PublisherEntity publisher;
 
     public BookEntity() {
     }
 
-    public BookEntity(String id) {
+    public BookEntity(final String id) {
         super(id);
     }
 

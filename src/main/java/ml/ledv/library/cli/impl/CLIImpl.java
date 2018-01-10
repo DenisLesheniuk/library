@@ -1,6 +1,8 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
+import ml.ledv.library.cli.utils.TaskHandler;
+import ml.ledv.library.cli.utils.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
 import ml.ledv.library.db.entity.impl.UserEntity;
 import ml.ledv.library.db.service.BookService;
@@ -8,6 +10,7 @@ import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -15,16 +18,21 @@ import java.util.Scanner;
 @Service
 public class CLIImpl implements CLI {
 
+    private TaskHandler taskHandler;
+
     private UserService userService;
     private BookService bookService;
+    private List<Task> tasks;
 
     private Scanner scanner;
 
     @Autowired
-    public CLIImpl(final UserService userService, final BookService bookService) {
+    public CLIImpl(final TaskHandler taskHandler, final UserService userService, final BookService bookService) {
+        this.taskHandler = taskHandler;
         this.userService = userService;
         this.bookService = bookService;
         scanner = new Scanner(System.in);
+        tasks = new ArrayList<>();
     }
 
     @Override
@@ -41,12 +49,13 @@ public class CLIImpl implements CLI {
             System.out.println("5. Show all free.");
             System.out.println("6. Reserve book.");
             System.out.println("7. User service.");
+            System.out.println("8. Undo.");
 
             choice = scanner.nextLine();
 
             switch (choice) {
                 case "1": {
-                    addBook();
+                    taskHandler.addBook();
                     break;
                 }
                 case "2": {
@@ -73,25 +82,15 @@ public class CLIImpl implements CLI {
                     userServiceMenu();
                     break;
                 }
+                case "8": {
+                    taskHandler.undo();
+                    break;
+                }
                 default: {
                     System.out.println("Wrong choice!");
                 }
             }
         }
-    }
-
-    private void addBook() {
-
-        String bookName = null;
-
-        while (bookName == null) {
-            System.out.println("Enter book name: ");
-            bookName = scanner.nextLine();
-        }
-
-        bookService.createBook(bookName);
-
-        System.out.println("Created book - " + bookName);
     }
 
     private void deleteBook() {

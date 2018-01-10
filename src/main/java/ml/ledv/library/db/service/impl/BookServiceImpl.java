@@ -24,12 +24,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(final String name) {
+    public BookEntity createBook(final String name) {
 
         final BookEntity bookEntity = (BookEntity) bookCreator.createEntity();
         bookEntity.setName(name);
 
-        bookRepository.save(bookEntity);
+       return bookRepository.save(bookEntity);
     }
 
     @Override
