@@ -71,4 +71,14 @@ public class UserServiceImpl implements UserService {
     public Optional<UserEntity> getUserByBook(final BookEntity bookEntity) {
         return userRepository.findByBooks(bookEntity);
     }
+
+    @Override
+    public UserEntity saveUser(final UserEntity userEntity) {
+        return userRepository.save(userEntity);
+    }
+
+    @Override
+    public void updateUserId(final String newId, final String id) {
+        userRepository.updateId(newId, id);
+    }
 }

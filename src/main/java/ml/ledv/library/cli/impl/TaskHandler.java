@@ -77,6 +77,19 @@ public class TaskHandler {
         stack.push(task.execute());
     }
 
+    public void deleteUser() {
+        task = new DeleteUserTask(userService);
+        final Task executedTask = task.execute();
+        if (executedTask != null) {
+            stack.push(executedTask);
+        } else return;
+    }
+
+    public void showAllUsers() {
+        task = new ShowAllUsersTask(userService);
+        stack.push(task.execute());
+    }
+
     public void undo() {
         if (!stack.isEmpty()) {
             stack.pop().undo();

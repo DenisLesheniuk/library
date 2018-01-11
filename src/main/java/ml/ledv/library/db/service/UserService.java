@@ -23,4 +23,8 @@ public interface UserService {
     void removeBook(UserEntity user, BookEntity book);
 
     Optional<UserEntity> getUserByBook(BookEntity bookEntity);
+
+    UserEntity saveUser(UserEntity userEntity);
+
+    void updateUserId(String newId, String id);
 }
