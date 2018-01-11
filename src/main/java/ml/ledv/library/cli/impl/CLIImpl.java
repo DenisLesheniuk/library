@@ -63,7 +63,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "3": {
-                    cancelBookReservation();
+                    taskHandler.cancelBookReservation();
                     break;
                 }
                 case "4": {
@@ -100,35 +100,6 @@ public class CLIImpl implements CLI {
 
     private void cancelBookReservation() {
 
-        String bookId = null;
-        String userId = null;
-
-        while (bookId == null) {
-            System.out.println("Enter book id: ");
-            bookId = scanner.nextLine();
-        }
-
-        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
-
-        if (!bookOptional.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist!");
-            return;
-        } else {
-
-            while (userId == null) {
-                System.out.println("Enter user id: ");
-                userId = scanner.nextLine();
-            }
-
-            final Optional<UserEntity> userOptional = userService.getUserById(userId);
-            if (!userOptional.isPresent()) {
-                System.out.println("User with id " + userId + " is not exist!");
-                return;
-            } else {
-                userService.removeBook(userOptional.get(), bookOptional.get());
-            }
-        }
-        System.out.println("BookDocument is returned - " + bookId);
     }
 
     private void showAll() {

@@ -2,7 +2,6 @@ package ml.ledv.library.cli.utils.task.impl;
 
 import ml.ledv.library.cli.utils.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
-import ml.ledv.library.db.repository.BookRepository;
 import ml.ledv.library.db.service.BookService;
 
 import java.util.Optional;
