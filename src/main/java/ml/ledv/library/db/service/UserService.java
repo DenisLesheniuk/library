@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void createUser(String login);
+    UserEntity createUser(String login);
 
     void deleteUser(UserEntity user);
 

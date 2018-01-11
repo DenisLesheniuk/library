@@ -26,13 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createUser(final String login) {
+    public UserEntity createUser(final String login) {
 
         final UserEntity userEntity = (UserEntity) userCreator.createEntity();
         userEntity.setLogin(login);
         userEntity.setBooks(new ArrayList<>());
 
-        userRepository.save(userEntity);
+        return userRepository.save(userEntity);
     }
 
     @Override

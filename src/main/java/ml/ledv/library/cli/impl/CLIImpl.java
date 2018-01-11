@@ -54,7 +54,7 @@ public class CLIImpl implements CLI {
 
             switch (choice) {
                 case "1": {
-                    taskHandler.addBook();
+                    taskHandler.createBook();
                     break;
                 }
                 case "2": {
@@ -78,7 +78,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "7": {
-                    userServiceMenu();
+                    taskHandler.showUserMenu();
                     break;
                 }
                 case "8": {
@@ -92,59 +92,12 @@ public class CLIImpl implements CLI {
         }
     }
 
-    private void reserveBook() {
-
-    }
-
     private void userServiceMenu() {
 
-        String choice;
-
-        while (true) {
-
-            System.out.println("UserDocument service menu.");
-            System.out.println("1. Create User");
-            System.out.println("2. Delete User");
-            System.out.println("3. Show all.");
-            System.out.println("4. Back.");
-
-            choice = scanner.nextLine();
-
-            switch (choice) {
-                case "1": {
-                    addUserMenu();
-                    break;
-                }
-                case "2": {
-                    deleteUser();
-                    break;
-                }
-                case "3": {
-                    showUsers();
-                    break;
-                }
-                case "4": {
-                    return;
-                }
-                default: {
-                    System.out.println("Wrong choice!");
-                }
-            }
-        }
     }
 
     private void addUserMenu() {
 
-        String userLogin = null;
-
-        while (userLogin == null) {
-            System.out.println("Enter user login: ");
-            userLogin = scanner.nextLine();
-        }
-
-        userService.createUser(userLogin);
-
-        System.out.println("Created user - " + userLogin);
     }
 
     private void deleteUser() {

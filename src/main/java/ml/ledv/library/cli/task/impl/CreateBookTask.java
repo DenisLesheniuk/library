@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Scanner;
 
-public class AddBookTask implements Task {
+public class CreateBookTask implements Task {
 
     private BookService bookService;
     private Scanner scanner;
@@ -16,7 +16,7 @@ public class AddBookTask implements Task {
     private BookEntity bookEntity;
 
     @Autowired
-    public AddBookTask(final BookService bookService) {
+    public CreateBookTask(final BookService bookService) {
         this.bookService = bookService;
         this.scanner = new Scanner(System.in);
     }
