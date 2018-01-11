@@ -46,8 +46,10 @@ public class DeleteBookTask implements Task {
     @Override
     public void undo() {
         System.out.println("Undo deleting the book - " + bookEntity.getName());
+
         final BookEntity book = bookService.saveBook(bookEntity);
-        bookService.updateId(bookEntity.getId(), book.getId() );
+        bookService.updateId(bookEntity.getId(), book.getId());
+
         System.out.println(".... book " + bookEntity.getName() + " is restored!");
     }
 }

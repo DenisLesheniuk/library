@@ -21,7 +21,7 @@ public class CancelBookReservationTask implements Task {
     public CancelBookReservationTask(final BookService bookService, final UserService userService) {
         this.bookService = bookService;
         this.userService = userService;
-        scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -67,8 +67,10 @@ public class CancelBookReservationTask implements Task {
     @Override
     public void undo() {
         System.out.println("Undo canceling book reservation - " + bookEntity.getName());
+
         userEntity.getBooks().add(bookEntity);
         userService.updateUser(userEntity);
+
         System.out.println(".... book " + bookEntity.getName() + " is added.");
     }
 }

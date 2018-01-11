@@ -21,7 +21,7 @@ public class ShowAllFreeBooksTask implements Task {
     public ShowAllFreeBooksTask(final BookService bookService, final UserService userService) {
         this.bookService = bookService;
         this.userService = userService;
-        freeBookEntities = new ArrayList<>();
+        this.freeBookEntities = new ArrayList<>();
     }
 
     @Override

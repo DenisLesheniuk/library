@@ -58,6 +58,14 @@ public class TaskHandler {
         stack.push(task.execute());
     }
 
+    public void reserveBook() {
+        task = new ReserveBookTask(bookService, userService);
+        final Task executedTask = task.execute();
+        if (executedTask != null) {
+            stack.push(executedTask);
+        } else return;
+    }
+
     public void undo() {
         if (!stack.isEmpty()) {
             stack.pop().undo();

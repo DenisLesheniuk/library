@@ -74,7 +74,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "6": {
-                    reserveBook();
+                    taskHandler.reserveBook();
                     break;
                 }
                 case "7": {
@@ -92,56 +92,8 @@ public class CLIImpl implements CLI {
         }
     }
 
-    private void showAllFree() {
-
-    }
-
     private void reserveBook() {
 
-        String bookId = null;
-        String userId = null;
-
-        while (bookId == null) {
-
-            System.out.println("Enter book id: ");
-            bookId = scanner.nextLine();
-        }
-        while (userId == null) {
-
-            System.out.println("Enter user id: ");
-            userId = scanner.nextLine();
-        }
-
-        final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
-
-        if (!bookOptional.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist! ");
-            return;
-        } else {
-
-            final BookEntity book = bookOptional.get();
-
-            if (userService.getUserByBook(book).isPresent()) {
-                System.out.println("Book " + book.getName() + " is already reserved.");
-                return;
-            } else {
-
-                final Optional<UserEntity> userOptional = userService.getUserById(userId);
-
-                if (!userOptional.isPresent()) {
-                    System.out.println("User with id " + userId + " is not exist! ");
-                    return;
-                } else {
-
-                    final UserEntity user = userOptional.get();
-
-                    user.getBooks().add(book);
-                    userService.updateUser(user);
-                }
-            }
-        }
-
-        System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId);
     }
 
     private void userServiceMenu() {
@@ -234,13 +186,5 @@ public class CLIImpl implements CLI {
             }
             System.out.println("******************************************************");
         }
-    }
-
-    private void printBooks(final BookEntity book) {
-        System.out.println();
-        System.out.println("******************************************************");
-        System.out.println("Id:        " + book.getId());
-        System.out.println("Book name: " + book.getName());
-        System.out.println("******************************************************");
     }
 }

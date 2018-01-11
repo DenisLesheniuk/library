@@ -18,7 +18,7 @@ public class AddBookTask implements Task {
     @Autowired
     public AddBookTask(final BookService bookService) {
         this.bookService = bookService;
-        scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
     }
 
     @Override
@@ -40,7 +40,9 @@ public class AddBookTask implements Task {
     @Override
     public void undo() {
         System.out.println("Undo creating the book - " + bookEntity.getName());
+
         bookService.deleteBook(bookEntity);
+
         System.out.println(".... book " + bookEntity.getName() + " is deleted.");
     }
 }
