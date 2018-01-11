@@ -1,4 +1,4 @@
-package ml.ledv.library.cli.utils.task;
+package ml.ledv.library.cli.task;
 
 public interface Task {
 

@@ -1,11 +1,8 @@
-package ml.ledv.library.cli.utils;
+package ml.ledv.library.cli.impl;
 
-import ml.ledv.library.cli.utils.task.Task;
+import ml.ledv.library.cli.task.Task;
 
-import ml.ledv.library.cli.utils.task.impl.AddBookTask;
-import ml.ledv.library.cli.utils.task.impl.CancelBookReservationTask;
-import ml.ledv.library.cli.utils.task.impl.DeleteBookTask;
-import ml.ledv.library.cli.utils.task.impl.ShowAllBooksTask;
+import ml.ledv.library.cli.task.impl.*;
 import ml.ledv.library.db.service.BookService;
 import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +48,13 @@ public class TaskHandler {
         } else return;
     }
 
-    public void showAllbooks() {
+    public void showAllBooks() {
         task = new ShowAllBooksTask(bookService);
+        stack.push(task.execute());
+    }
+
+    public void showAllFreBooks() {
+        task = new ShowAllFreeBooksTask(bookService, userService);
         stack.push(task.execute());
     }
 

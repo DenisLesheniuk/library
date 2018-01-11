@@ -1,7 +1,7 @@
-package ml.ledv.library.cli.utils.task.impl;
+package ml.ledv.library.cli.task.impl;
 
 import ml.ledv.library.cli.utils.Printer;
-import ml.ledv.library.cli.utils.task.Task;
+import ml.ledv.library.cli.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
 import ml.ledv.library.db.service.BookService;
 

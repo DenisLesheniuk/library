@@ -1,8 +1,7 @@
 package ml.ledv.library.cli.impl;
 
 import ml.ledv.library.cli.CLI;
-import ml.ledv.library.cli.utils.TaskHandler;
-import ml.ledv.library.cli.utils.task.Task;
+import ml.ledv.library.cli.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
 import ml.ledv.library.db.entity.impl.UserEntity;
 import ml.ledv.library.db.service.BookService;
@@ -67,11 +66,11 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "4": {
-                    taskHandler.showAllbooks();
+                    taskHandler.showAllBooks();
                     break;
                 }
                 case "5": {
-                    showAllFree();
+                    taskHandler.showAllFreBooks();
                     break;
                 }
                 case "6": {
@@ -95,15 +94,6 @@ public class CLIImpl implements CLI {
 
     private void showAllFree() {
 
-        final List<BookEntity> bookEntities = bookService.getAll();
-        Optional<UserEntity> userOptional = null;
-
-        for (BookEntity book : bookEntities) {
-            userOptional = userService.getUserByBook(book);
-            if (!userOptional.isPresent()) {
-                printBooks(book);
-            }
-        }
     }
 
     private void reserveBook() {

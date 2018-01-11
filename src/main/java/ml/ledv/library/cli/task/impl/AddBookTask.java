@@ -1,6 +1,6 @@
-package ml.ledv.library.cli.utils.task.impl;
+package ml.ledv.library.cli.task.impl;
 
-import ml.ledv.library.cli.utils.task.Task;
+import ml.ledv.library.cli.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
 import ml.ledv.library.db.service.BookService;
 
@@ -26,7 +26,7 @@ public class AddBookTask implements Task {
         String bookName = null;
 
         while (bookName == null) {
-            System.out.println("Enter book name: ");
+            System.out.println("Enter book id: ");
             bookName = scanner.nextLine();
         }
 
