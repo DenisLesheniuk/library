@@ -4,6 +4,7 @@ import ml.ledv.library.cli.utils.task.Task;
 
 import ml.ledv.library.cli.utils.task.impl.AddBookTask;
 import ml.ledv.library.cli.utils.task.impl.DeleteBookTask;
+import ml.ledv.library.db.repository.BookRepository;
 import ml.ledv.library.db.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,14 @@ public class TaskHandler {
 
     private Task task;
     private BookService bookService;
+    private BookRepository repository;
 
     private Deque<Task> stack;
 
     @Autowired
-    public TaskHandler(final BookService bookService) {
+    public TaskHandler(final BookService bookService, BookRepository repository) {
         this.bookService = bookService;
+        this.repository = repository;
         this.stack = new LinkedList<>();
     }
 
@@ -32,7 +35,7 @@ public class TaskHandler {
     }
 
     public void deleteBook(){
-        task = new DeleteBookTask(bookService);
+        task = new DeleteBookTask(bookService, repository);
         final Task deleteTask = task.execute();
         if(deleteTask != null){
             stack.push(deleteTask);

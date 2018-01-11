@@ -2,6 +2,7 @@ package ml.ledv.library.cli.utils.task.impl;
 
 import ml.ledv.library.cli.utils.task.Task;
 import ml.ledv.library.db.entity.impl.BookEntity;
+import ml.ledv.library.db.repository.BookRepository;
 import ml.ledv.library.db.service.BookService;
 
 import java.util.Optional;
@@ -11,11 +12,13 @@ public class DeleteBookTask implements Task {
 
     private BookService bookService;
     private Scanner scanner;
+    private BookRepository repository;
 
     private BookEntity bookEntity;
 
-    public DeleteBookTask(final BookService bookService) {
+    public DeleteBookTask(final BookService bookService, BookRepository repository) {
         this.bookService = bookService;
+        this.repository = repository;
         this.scanner = new Scanner(System.in);
     }
 
@@ -45,8 +48,9 @@ public class DeleteBookTask implements Task {
 
     @Override
     public void undo() {
-        System.out.println("Undo creating the book - " + bookEntity.getName());
+        System.out.println("Undo deleting the book - " + bookEntity.getName());
         final BookEntity book = bookService.saveBook(bookEntity);
-        System.out.println(".... book " + bookEntity.getName() + " is deleted.");
+        repository.updateId(bookEntity.getId(), book.getId() );
+        System.out.println(".... book " + bookEntity.getName() + " is restored!");
     }
 }
