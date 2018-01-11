@@ -31,27 +31,27 @@ public class CancelBookReservationTask implements Task {
         String userId = null;
 
         while (bookId == null) {
-            System.out.println("Enter book id: ");
+            System.out.println("\nEnter book id: ");
             bookId = scanner.nextLine();
         }
 
         final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist!");
+            System.out.println("\nBook with id " + bookId + " is not exist!\n");
             return null;
         } else {
 
             bookEntity = bookOptional.get();
 
             while (userId == null) {
-                System.out.println("Enter user id: ");
+                System.out.println("\nEnter user id: ");
                 userId = scanner.nextLine();
             }
 
             final Optional<UserEntity> userOptional = userService.getUserById(userId);
             if (!userOptional.isPresent()) {
-                System.out.println("User with id " + userId + " is not exist!");
+                System.out.println("\nUser with id " + userId + " is not exist!\n");
                 return null;
             } else {
 
@@ -66,11 +66,11 @@ public class CancelBookReservationTask implements Task {
 
     @Override
     public void undo() {
-        System.out.println("Undo canceling book reservation - " + bookEntity.getName());
+        System.out.println("\nUndo canceling book reservation - " + bookEntity.getName());
 
         userEntity.getBooks().add(bookEntity);
         userService.updateUser(userEntity);
 
-        System.out.println(".... book " + bookEntity.getName() + " is added.");
+        System.out.println(".... book with name " + bookEntity.getName() + " is added.");
     }
 }

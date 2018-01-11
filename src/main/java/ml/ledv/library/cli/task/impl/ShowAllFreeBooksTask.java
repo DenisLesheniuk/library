@@ -30,6 +30,8 @@ public class ShowAllFreeBooksTask implements Task {
         final List<BookEntity> bookEntities = bookService.getAll();
         Optional<UserEntity> userOptional = null;
 
+        System.out.println("\n                     ALL FREE BOOKS\n");
+
         for (BookEntity book : bookEntities) {
             userOptional = userService.getUserByBook(book);
             if (!userOptional.isPresent()) {
@@ -43,6 +45,8 @@ public class ShowAllFreeBooksTask implements Task {
 
     @Override
     public void undo() {
+        System.out.println("\n                     ALL FREE BOOKS\n");
+
         for (BookEntity book : freeBookEntities) {
             Printer.printBooks(book);
         }

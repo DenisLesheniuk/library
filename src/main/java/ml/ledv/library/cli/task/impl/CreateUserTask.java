@@ -24,19 +24,19 @@ public class CreateUserTask implements Task {
         String userLogin = null;
 
         while (userLogin == null) {
-            System.out.println("Enter user login: ");
+            System.out.println("\nEnter user login: ");
             userLogin = scanner.nextLine();
         }
 
         userEntity = userService.createUser(userLogin);
 
-        System.out.println("Created user - " + userLogin);
+        System.out.println("Created user with name - " + userLogin + "\n");
         return this;
     }
 
     @Override
     public void undo() {
-        System.out.println("Undo creating user - " + userEntity.getLogin());
+        System.out.println("\nUndo creating user - " + userEntity.getLogin());
 
         userService.deleteUser(userEntity);
 

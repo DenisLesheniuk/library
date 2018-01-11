@@ -22,6 +22,8 @@ public class ShowAllUsersTask implements Task {
 
     @Override
     public Task execute() {
+        System.out.println("\n                     ALL USERS\n");
+
         users = userService.getAll();
         Printer.printUsers(users);
         return this;
@@ -29,6 +31,8 @@ public class ShowAllUsersTask implements Task {
 
     @Override
     public void undo() {
+
+        System.out.println("\n                     ALL USERS\n");
         Printer.printUsers(users);
     }
 

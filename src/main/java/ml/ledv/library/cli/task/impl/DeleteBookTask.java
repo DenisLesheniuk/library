@@ -25,31 +25,31 @@ public class DeleteBookTask implements Task {
         String bookId = null;
 
         while (bookId == null) {
-            System.out.println("Enter book name: ");
+            System.out.println("\nEnter book id: ");
             bookId = scanner.nextLine();
         }
 
         final Optional<BookEntity> optionalBookEntity = bookService.getBookById(bookId);
 
         if (!optionalBookEntity.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist!");
+            System.out.println("\nBook with id " + bookId + " is not exist!\n");
             return null;
         } else {
             bookEntity = optionalBookEntity.get();
             bookService.deleteBook(bookEntity);
         }
 
-        System.out.println("Deleted book - " + bookId);
+        System.out.println("Deleted book with id  - " + bookId + "\n");
         return this;
     }
 
     @Override
     public void undo() {
-        System.out.println("Undo deleting the book - " + bookEntity.getName());
+        System.out.println("\nUndo deleting the book - " + bookEntity.getName());
 
         final BookEntity book = bookService.saveBook(bookEntity);
         bookService.updateId(bookEntity.getId(), book.getId());
 
-        System.out.println(".... book " + bookEntity.getName() + " is restored!");
+        System.out.println(".... book with name " + bookEntity.getName() + " is restored!");
     }
 }

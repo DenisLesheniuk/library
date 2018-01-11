@@ -26,23 +26,23 @@ public class CreateBookTask implements Task {
         String bookName = null;
 
         while (bookName == null) {
-            System.out.println("Enter book id: ");
+            System.out.println("\nEnter book name: ");
             bookName = scanner.nextLine();
         }
 
         bookEntity = bookService.createBook(bookName);
 
-        System.out.println("Created book - " + bookName);
+        System.out.println("Created book with name - " + bookName + "\n");
 
         return this;
     }
 
     @Override
     public void undo() {
-        System.out.println("Undo creating the book - " + bookEntity.getName());
+        System.out.println("\nUndo creating book with name  - " + bookEntity.getName());
 
         bookService.deleteBook(bookEntity);
 
-        System.out.println(".... book " + bookEntity.getName() + " is deleted.");
+        System.out.println(".... book with name " + bookEntity.getName() + " is deleted.");
     }
 }

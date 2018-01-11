@@ -17,7 +17,7 @@ public class Printer {
         System.out.println("******************************************************");
     }
 
-    public static void printUsers(final List<UserEntity> users){
+    public static void printUsers(final List<UserEntity> users) {
         for (UserEntity user : users) {
             System.out.println();
             System.out.println("******************************************************");
@@ -41,7 +41,7 @@ public class Printer {
 
         while (true) {
 
-            System.out.println("UserDocument service menu.");
+            System.out.println("\n      USER SERVICE MENU\n");
             System.out.println("1. Create User");
             System.out.println("2. Delete User");
             System.out.println("3. Show all.");
@@ -66,6 +66,63 @@ public class Printer {
                     return;
                 }
                 case "5": {
+                    taskHandler.undo();
+                    break;
+                }
+                default: {
+                    System.out.println("Wrong choice!");
+                }
+            }
+        }
+    }
+
+    public static void printLibraryMenu(final TaskHandler taskHandler, final Scanner scanner) {
+
+        String choice;
+        while (true) {
+            System.out.println("\n      BOOK LIBRARY    \n");
+
+            System.out.println("1. Add book.");
+            System.out.println("2. Delete book.");
+            System.out.println("3. Return book.");
+            System.out.println("4. Show all.");
+            System.out.println("5. Show all free.");
+            System.out.println("6. Reserve book.");
+            System.out.println("7. User service.");
+            System.out.println("8. Undo.");
+
+            choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1": {
+                    taskHandler.createBook();
+                    break;
+                }
+                case "2": {
+                    taskHandler.deleteBook();
+                    break;
+                }
+                case "3": {
+                    taskHandler.cancelBookReservation();
+                    break;
+                }
+                case "4": {
+                    taskHandler.showAllBooks();
+                    break;
+                }
+                case "5": {
+                    taskHandler.showAllFreBooks();
+                    break;
+                }
+                case "6": {
+                    taskHandler.reserveBook();
+                    break;
+                }
+                case "7": {
+                    taskHandler.showUserMenu();
+                    break;
+                }
+                case "8": {
                     taskHandler.undo();
                     break;
                 }

@@ -19,6 +19,8 @@ public class ShowAllBooksTask implements Task {
     @Override
     public Task execute() {
 
+        System.out.println("\n                     ALL BOOKS\n");
+
         bookEntities = bookService.getAll();
 
         for (BookEntity book : bookEntities) {
@@ -29,6 +31,9 @@ public class ShowAllBooksTask implements Task {
 
     @Override
     public void undo() {
+
+        System.out.println("\n                     ALL BOOKS\n");
+
         for (BookEntity book : bookEntities) {
             Printer.printBooks(book);
         }

@@ -35,33 +35,33 @@ public class ReserveBookTask implements Task {
 
         while (bookId == null) {
 
-            System.out.println("Enter book id: ");
+            System.out.println("\nEnter book id: ");
             bookId = scanner.nextLine();
         }
         while (userId == null) {
 
-            System.out.println("Enter user id: ");
+            System.out.println("\nEnter user id: ");
             userId = scanner.nextLine();
         }
 
         final Optional<BookEntity> bookOptional = bookService.getBookById(bookId);
 
         if (!bookOptional.isPresent()) {
-            System.out.println("Book with id " + bookId + " is not exist! ");
+            System.out.println("\nBook with id " + bookId + " is not exist! \n");
             return null;
         } else {
 
             bookEntity = bookOptional.get();
 
             if (userService.getUserByBook(bookEntity).isPresent()) {
-                System.out.println("Book " + bookEntity.getName() + " is already reserved.");
+                System.out.println("\nBook " + bookEntity.getName() + " is already reserved.\n");
                 return null;
             } else {
 
                 final Optional<UserEntity> userOptional = userService.getUserById(userId);
 
                 if (!userOptional.isPresent()) {
-                    System.out.println("User with id " + userId + " is not exist! ");
+                    System.out.println("\nUser with id " + userId + " is not exist!\n ");
                     return null;
                 } else {
 
@@ -73,14 +73,14 @@ public class ReserveBookTask implements Task {
             }
         }
 
-        System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId);
+        System.out.println("BookDocument " + bookId + " is reserved " + " by " + userId + "\n");
 
         return this;
     }
 
     @Override
     public void undo() {
-        System.out.println("Undo reserving book - " + bookEntity.getName());
+        System.out.println("\nUndo reserving book - " + bookEntity.getName());
 
         userService.removeBook(userEntity, bookEntity);
 

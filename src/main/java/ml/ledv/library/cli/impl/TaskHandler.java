@@ -8,7 +8,6 @@ import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.Temporal;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -26,6 +25,11 @@ public class TaskHandler {
         this.bookService = bookService;
         this.userService = userService;
         this.stack = new LinkedList<>();
+    }
+
+    public void showLibraryMenu(){
+        task = new ShowLibraryMenu(this);
+        task.execute();
     }
 
     public void createBook() {
@@ -51,12 +55,12 @@ public class TaskHandler {
 
     public void showAllBooks() {
         task = new ShowAllBooksTask(bookService);
-        stack.push(task.execute());
+        task.execute();
     }
 
     public void showAllFreBooks() {
         task = new ShowAllFreeBooksTask(bookService, userService);
-        stack.push(task.execute());
+        task.execute();
     }
 
     public void reserveBook() {
@@ -69,7 +73,7 @@ public class TaskHandler {
 
     public void showUserMenu() {
         task = new UserServiceMenuTask(this);
-        stack.push(task.execute());
+        task.execute();
     }
 
     public void createUser() {
@@ -87,14 +91,15 @@ public class TaskHandler {
 
     public void showAllUsers() {
         task = new ShowAllUsersTask(userService);
-        stack.push(task.execute());
+        task.execute();
     }
 
     public void undo() {
         if (!stack.isEmpty()) {
             stack.pop().undo();
         } else {
-            System.out.println("Can't undo!");
+            System.out.println("\nCan't undo!");
+            return;
         }
     }
 
