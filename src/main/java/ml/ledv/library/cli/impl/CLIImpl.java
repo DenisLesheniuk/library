@@ -67,7 +67,7 @@ public class CLIImpl implements CLI {
                     break;
                 }
                 case "4": {
-                    showAll();
+                    taskHandler.showAllbooks();
                     break;
                 }
                 case "5": {
@@ -90,22 +90,6 @@ public class CLIImpl implements CLI {
                     System.out.println("Wrong choice!");
                 }
             }
-        }
-    }
-
-    private void deleteBook() {
-
-
-    }
-
-    private void cancelBookReservation() {
-
-    }
-
-    private void showAll() {
-
-        for (BookEntity book : bookService.getAll()) {
-            printBooks(book);
         }
     }
 

@@ -5,11 +5,9 @@ import ml.ledv.library.db.entity.impl.BookEntity;
 import ml.ledv.library.db.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
-@Service
 public class AddBookTask implements Task {
 
     private BookService bookService;

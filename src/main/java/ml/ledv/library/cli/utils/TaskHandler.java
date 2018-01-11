@@ -5,6 +5,7 @@ import ml.ledv.library.cli.utils.task.Task;
 import ml.ledv.library.cli.utils.task.impl.AddBookTask;
 import ml.ledv.library.cli.utils.task.impl.CancelBookReservationTask;
 import ml.ledv.library.cli.utils.task.impl.DeleteBookTask;
+import ml.ledv.library.cli.utils.task.impl.ShowAllBooksTask;
 import ml.ledv.library.db.service.BookService;
 import ml.ledv.library.db.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Deque;
 import java.util.LinkedList;
-
 
 @Service
 public class TaskHandler {
@@ -49,6 +49,11 @@ public class TaskHandler {
         if (executedTask != null) {
             stack.push(executedTask);
         } else return;
+    }
+
+    public void showAllbooks() {
+        task = new ShowAllBooksTask(bookService);
+        stack.push(task.execute());
     }
 
     public void undo() {
