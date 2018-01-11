@@ -12,13 +12,11 @@ public class DeleteBookTask implements Task {
 
     private BookService bookService;
     private Scanner scanner;
-    private BookRepository repository;
 
     private BookEntity bookEntity;
 
-    public DeleteBookTask(final BookService bookService, BookRepository repository) {
+    public DeleteBookTask(final BookService bookService) {
         this.bookService = bookService;
-        this.repository = repository;
         this.scanner = new Scanner(System.in);
     }
 
@@ -50,7 +48,7 @@ public class DeleteBookTask implements Task {
     public void undo() {
         System.out.println("Undo deleting the book - " + bookEntity.getName());
         final BookEntity book = bookService.saveBook(bookEntity);
-        repository.updateId(bookEntity.getId(), book.getId() );
+        bookService.updateId(bookEntity.getId(), book.getId() );
         System.out.println(".... book " + bookEntity.getName() + " is restored!");
     }
 }

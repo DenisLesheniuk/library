@@ -52,5 +52,8 @@ public class BookServiceImpl implements BookService {
        return bookRepository.save(book);
     }
 
-
+    @Override
+    public void updateId(final String newId,final String id) {
+        bookRepository.updateId(newId, id);
+    }
 }
